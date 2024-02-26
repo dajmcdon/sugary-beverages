@@ -1,0 +1,244 @@
+---
+title: "Client Report (Placeholder)"
+author: "Parham Pishrobat, Sarah Mosri, Johnson Chen"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup}
+library(tidyverse)
+library(lubridate)
+library(rlang)
+```
+
+
+**1. Introduction**
+   
+   - Background of the study.
+   - Objective(s) of the study.
+   - Statistical questions to answer.
+
+The study conducted by Jue, Press, and Loewenstein investigates the effectiveness of various strategies to encourage consumers to choose zero-calorie beverages over sugary alternatives. The research focuses on the impact of visual calorie content presentations and financial incentives. By examining the efficacy of price discounts and visual messages that detail the caloric content and physical activity required to offset these calories, the study aims to identify effective methods to shift consumer preferences towards healthier beverage choices.
+
+**2. Data Description and Summaries**
+   
+   - Data collection method.
+   - Study design.
+   - Sample size.
+   - Variables measured.
+   - Missing data.
+   
+```{r data}
+beverage_sales <- read.csv("../rawdata/june1data.csv")
+head(beverage_sales)
+dim(beverage_sales)
+```
+
+
+**3. Exploratory Analysis**
+   
+   - Suggesting tables and figures for data summarization.
+   - Initial findings.
+   
+```{r Summarize Data}
+#' Summarize Data
+#'
+#' Provides a summary for numeric and categorical variables in the dataset.
+#' @param df Data frame to summarize.
+#' @return A list containing summaries for numeric and categorical variables.
+summarize_data <- function(df) {
+  numerical_summary   <- df %>% select_if(is.numeric) %>% summary()
+  categorical_summary <- df %>% select_if(is.character) %>% summary()
+  list(numerical = numerical_summary, categorical = categorical_summary)
+}
+summarize_data(beverage_sales)$numerical
+summarize_data(beverage_sales)$categorical
+```
+
+
+```{r Plot Histograms}
+#' Plot Histograms for Numeric Variables
+#'
+#' Plots histograms for all numeric variables in the dataset to explore distributions.
+#' @param df Data frame containing numeric variables.
+plot_histograms <- function(df) {
+  numeric_vars <- select_if(df, is.numeric) %>% names()
+  
+  for (var in numeric_vars) {
+    print(ggplot(df, aes_string(x = var)) + 
+      geom_histogram(bins = 10, fill = "blue", color = "black", na.rm = T) + 
+      theme_minimal() + 
+      labs(title = paste("Distribution of", var)))
+  }
+}
+plot_histograms(beverage_sales)
+```
+
+
+```{r Boxplots}
+#' Boxplots for Numeric Variables by Category
+#'
+#' Generates boxplots for numeric variables by a specified categorical variable.
+#' @param df Data frame containing the data.
+#' @param category Name of the categorical variable.
+boxplots_by_category <- function(df, category) {
+  numeric_vars <- select_if(df, is.numeric) %>% names()
+  
+  for (var in numeric_vars) {
+    print(ggplot(df, aes_string(x = category, y = var, fill = category)) + 
+      geom_boxplot(na.rm = T) + 
+      theme_minimal() + 
+      labs(title = paste("Boxplot of", var, "by", category)))
+  }
+}
+boxplots_by_category(beverage_sales, "Intervention")
+```
+
+
+```{r Scatter Plots}
+#' Scatter Plots for Numeric Variables
+#'
+#' Generates scatter plots for pairs of numeric variables.
+#' @param df Data frame containing the data.
+scatter_plots <- function(df) {
+  numeric_vars <- select_if(df, is.numeric) %>% names()
+  
+  if (length(numeric_vars) > 1) {
+    for (i in 1:(length(numeric_vars) - 1)) {
+      for (j in (i + 1):length(numeric_vars)) {
+        print(ggplot(df, aes_string(x = numeric_vars[i], y = numeric_vars[j])) +
+          geom_point(alpha = 0.5) +
+          theme_minimal() +
+          labs(title = paste("Scatter Plot of", numeric_vars[i], "vs", numeric_vars[j])))
+      }
+    }
+  }
+}
+scatter_plots(beverage_sales)
+```
+
+```{r Summarize Sales}
+#' Summarize Sales by Dynamic Category
+#'
+#' Summarizes total sales by a specified category (e.g., Site, Intervention).
+#' @param df Data frame containing the sales data.
+#' @param category The name of the column to group by, as a string.
+#' @return A data frame with the total sales summarized by the specified category.
+summarise_sales <- function(df, category) {
+  stat <- df %>%
+    group_by(.data[[category]]) %>%
+    summarise(Total_Sales = sum(Total, na.rm = TRUE), .groups = 'drop')
+  return(stat)
+}
+summarise_sales(beverage_sales, "Site")
+summarise_sales(beverage_sales, "Intervention")
+```
+
+
+```{r Handle Missing Data}
+#' Handle Missing Data 
+#'
+#' Provides an overview and simple strategies for handling missing data.
+#' @param df Data frame with potential missing values.
+#' @return Data frame with missing values handled.
+handle_missing_data <- function(df) {
+  # Overview of missing data
+  missing_overview <- sapply(df, function(x) sum(is.na(x)))
+  
+  # Strategies for imputation or removal?
+  
+  return(list(MissingOverview = missing_overview, CleanedData = df))
+}
+handle_missing_data(beverage_sales)$MissingOverview
+```
+
+
+```{r Sales Boxplot}
+#' Plot Boxplot for Sales Distribution by Site and Intervention
+#'
+#' Creates a boxplot to visualize the distribution of sales by site and intervention.
+#' @param df Data frame containing the sales data.
+#' @param x_var Name of the variable to be used on the x-axis, typically interventions.
+#' @param y_var Name of the variable to be used on the y-axis, typically total sales.
+#' @param fill_var Name of the variable to be used for fill color, typically site.
+#' @param title Plot title.
+#' @param x_lab Label for the x-axis.
+#' @param y_lab Label for the y-axis.
+#' @return A ggplot object representing the boxplot.
+plot_sales_distribution <- function(df, x_var, y_var, fill_var, title = "Sales Distribution by Site and Intervention",
+                                    x_lab = "Intervention Type", y_lab = "Sales") {
+  ggplot(df, aes_string(x = x_var, y = y_var, fill = fill_var)) +
+    geom_boxplot() +
+    theme_minimal() +
+    labs(title = title, x = x_lab, y = y_lab)
+}
+plot_sales_distribution(beverage_sales, "Intervention", "Total", "Site")
+```
+
+
+```{r Sales Scatterplot}
+#' Plot Scatter for Zero-Calorie vs Sugary Beverage Sales
+#'
+#' Creates a scatter plot to visualize the relationship between zero-calorie and sugary beverage sales, colored by site.
+#' @param df Data frame containing the beverage sales data.
+#' @param x_var Name of the variable representing zero-calorie beverage sales.
+#' @param y_var Name of the variable representing sugary beverage sales.
+#' @param color_var Name of the variable to be used for point colors, typically site.
+#' @param title Plot title.
+#' @param x_lab Label for the x-axis.
+#' @param y_lab Label for the y-axis.
+#' @return A ggplot object representing the scatter plot.
+plot_beverage_sales_comparison <- function(df, x_var, y_var, color_var, title = "Comparison of Zero-Calorie and Sugary Beverage Sales",
+                                           x_lab = "Zero-Calorie Beverage Sales", y_lab = "Sugary Beverage Sales") {
+  ggplot(df, aes_string(x = x_var, y = y_var, color = color_var)) +
+    geom_point() +
+    theme_minimal() +
+    labs(title = title, x = x_lab, y = y_lab)
+}
+plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
+```
+
+```{r Execute EDA}
+#' Execute EDA Functions
+#'
+#' Calls the defined functions to perform EDA on the dataset.
+execute_eda <- function(df) {
+  summary <- summarize_data(df)
+  print(summary)
+  
+  plot_histograms(df)
+  boxplots_by_category(df, "Site") # Replace "Site" with the appropriate categorical variable if different
+  scatter_plots(df)
+  missing_data <- handle_missing_data(df)
+  
+  print(missing_data$MissingOverview)
+}
+# execute_eda(beverage_sales)
+```
+
+
+
+
+**4. Formal Analysis**
+   
+   - Suggested statistical models and methods.
+   - Interpretation of results.
+
+**5. Conclusions**
+   
+   - Recommendations to the clients.
+
+**6. References**
+   
+   - Properly formatted citations.
+
+**7. Statistical Appendix**
+   
+   - Mathematical formulas.
+   - Additional tables/figures.
+
+
+
+
+
+
