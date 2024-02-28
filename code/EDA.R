@@ -111,3 +111,25 @@ plot_beverage_sales_comparison <- function(df, x_var, y_var, color_var, title = 
     labs(title = title, x = x_lab, y = y_lab)
 }
 
+
+
+
+
+#' Plot Missing Data and Reflect Balance
+#' 
+#' Creates a plot visualizing missingness summaries and total number of 
+#' observations faceted by site or intervention.
+#' @param df Data frame containing the beverage sales data.
+#' @param group_by_site Boolean reflecting desire to group by site variable. 
+#' @param group_by_intervention Boolean reflecting desire to group by intervention variable. 
+#' @param title Beginning of plot title.
+#' @return A ggplot2 object representing missing data and balance between groups. 
+plot_missing_data <- function(df, group_by_site= TRUE, group_by_intervention = TRUE,
+                              title = "Missing Data and Observation Count by") {
+  if(group_by_site) {
+    df %>% vis_miss(facet=Site) + ggtitle(paste0(title, " ", "Site")) 
+  } else if(group_by_intervention) {
+    df %>% vis_miss(facet=Intervention) + ggtitle(paste0(title, " ", "Intervention")) 
+  }
+}
+
