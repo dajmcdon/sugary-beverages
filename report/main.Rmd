@@ -1,6 +1,6 @@
 ---
 title: "Client Report (Placeholder)"
-author: "Parham Pishrobat, Sarah Mosri, Johnson Chen"
+author: "Parham Pishrobat, Sarah Masri, Johnson Chen"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
@@ -9,230 +9,142 @@ output: pdf_document
 library(tidyverse)
 library(lubridate)
 library(rlang)
+source("../code/EDA.R")
+source("../code/ITSA.R")
+source("../code/GEE.R")
+source("../code/LMEM.R")
 ```
 
 
-**1. Introduction**
-   
+
+
+## Introduction
+
    - Background of the study.
    - Objective(s) of the study.
    - Statistical questions to answer.
 
-The study conducted by Jue, Press, and Loewenstein investigates the effectiveness of various strategies to encourage consumers to choose zero-calorie beverages over sugary alternatives. The research focuses on the impact of visual calorie content presentations and financial incentives. By examining the efficacy of price discounts and visual messages that detail the caloric content and physical activity required to offset these calories, the study aims to identify effective methods to shift consumer preferences towards healthier beverage choices.
+Concerns around sugar consumption and its health implications have prompted an array of interventions aimed at modifying consumer behaviours in relation to sugary beverages. The current study investigates the effectiveness of various strategies to encourage consumers to choose zero-calorie beverages over sugary alternatives. In particular, the research question focuses on the impact of two types of visual presentations of calorie content through posters that highlight either the calorie content or the physical activity required to burn these calories. Furthermore, the effectiveness of price discounts, both independently and in conjunction with explanatory messaging, as a means to influence consumer choices is explored. 
 
-**2. Data Description and Summaries**
-   
+## Data Description and Summaries
+
    - Data collection method.
    - Study design.
    - Sample size.
    - Variables measured.
    - Missing data.
-   
-```{r data}
-beverage_sales <- read.csv("../rawdata/june1data.csv")
-head(beverage_sales)
-dim(beverage_sales)
+
+The data has been collected data from  cafeterias and convenience shops within three hospital sites, denoted by A, B, C, after conducting the interventions. Hospitals A is urban and has two cafeterias and two convenience shops. Hospital B is also urban setting and but has only one cafeteria. And finally hospital C is suburban setting, and has one cafeteria and one convenience shop. Both interventions (delivery of discount or the messaging type) and data collection  (recording the sales) was automatic at site A and by trained personnel in sites B and C. In the context of this study, sugary beverages include regular soft drinks and iced teas that are sweetened with natural sugars like sucrose and corn syrup, and zero-calorie beverages include diet soft drinks and teas, and water. Note that other beverage types like juices, milk, coffee, and fountain-dispensed drinks are excluded due to categorization challenges.
+
+The study adopts an interrupted time-series multi-site quasi-experimental design to assess the outcomes of five distinct interventions on the purchase patterns of bottled sugary and zero-calorie beverages. The interventions consist of two price discounts and three calorie messaging strategies, each designed to influence consumer purchasing behaviour towards healthier beverage options. The price interventions involved a 10% discount on zero-calorie beverages, with one intervention additionally providing explanatory messaging about the discount. The calorie messaging interventions varied in their approach, providing information on the caloric content of sugary beverages, the physical activity required to burn off these calories, and a combination of both strategies.
+
+The primary outcome of interest is daily sales of bottled sugary and zero-calorie beverages over a span of 30 weeks, from October 27 to May 23. The study periods include baseline data collection phases, intervention phases for both price discounts and calorie messaging, and washout periods to assess the persistence of intervention effects. 
+
+(INCOMPLETE)
+
+  
+
+```{r data, include=FALSE}
+beverage_sales <- read.csv("../rawdata/june1data.csv")[,1:6]
+# head(beverage_sales)
+# dim(beverage_sales)
 ```
 
-
-**3. Exploratory Analysis**
-   
-   - Suggesting tables and figures for data summarization.
-   - Initial findings.
-   
 ```{r Summarize Data}
-#' Summarize Data
-#'
-#' Provides a summary for numeric and categorical variables in the dataset.
-#' @param df Data frame to summarize.
-#' @return A list containing summaries for numeric and categorical variables.
-summarize_data <- function(df) {
-  numerical_summary   <- df %>% select_if(is.numeric) %>% summary()
-  categorical_summary <- df %>% select_if(is.character) %>% summary()
-  list(numerical = numerical_summary, categorical = categorical_summary)
-}
-summarize_data(beverage_sales)$numerical
-summarize_data(beverage_sales)$categorical
+# summarize_data(beverage_sales)$numerical
+# unique(beverage_sales$Site)
+# unique(beverage_sales$Intervention)
 ```
 
+## 3. Exploratory Analysis
+
+NOTE: we will figure out the order and title of these sub sections at the end
+
+### histogram and scatter plots, boxplot (Par; almost done)
 
 ```{r Plot Histograms}
-#' Plot Histograms for Numeric Variables
-#'
-#' Plots histograms for all numeric variables in the dataset to explore distributions.
-#' @param df Data frame containing numeric variables.
-plot_histograms <- function(df) {
-  numeric_vars <- select_if(df, is.numeric) %>% names()
-  
-  for (var in numeric_vars) {
-    print(ggplot(df, aes_string(x = var)) + 
-      geom_histogram(bins = 10, fill = "blue", color = "black", na.rm = T) + 
-      theme_minimal() + 
-      labs(title = paste("Distribution of", var)))
-  }
-}
 plot_histograms(beverage_sales)
 ```
 
 
 ```{r Boxplots}
-#' Boxplots for Numeric Variables by Category
-#'
-#' Generates boxplots for numeric variables by a specified categorical variable.
-#' @param df Data frame containing the data.
-#' @param category Name of the categorical variable.
-boxplots_by_category <- function(df, category) {
-  numeric_vars <- select_if(df, is.numeric) %>% names()
-  
-  for (var in numeric_vars) {
-    print(ggplot(df, aes_string(x = category, y = var, fill = category)) + 
-      geom_boxplot(na.rm = T) + 
-      theme_minimal() + 
-      labs(title = paste("Boxplot of", var, "by", category)))
-  }
-}
 boxplots_by_category(beverage_sales, "Intervention")
 ```
 
 
 ```{r Scatter Plots}
-#' Scatter Plots for Numeric Variables
-#'
-#' Generates scatter plots for pairs of numeric variables.
-#' @param df Data frame containing the data.
-scatter_plots <- function(df) {
-  numeric_vars <- select_if(df, is.numeric) %>% names()
-  
-  if (length(numeric_vars) > 1) {
-    for (i in 1:(length(numeric_vars) - 1)) {
-      for (j in (i + 1):length(numeric_vars)) {
-        print(ggplot(df, aes_string(x = numeric_vars[i], y = numeric_vars[j])) +
-          geom_point(alpha = 0.5) +
-          theme_minimal() +
-          labs(title = paste("Scatter Plot of", numeric_vars[i], "vs", numeric_vars[j])))
-      }
-    }
-  }
-}
 scatter_plots(beverage_sales)
 ```
 
-```{r Summarize Sales}
-#' Summarize Sales by Dynamic Category
-#'
-#' Summarizes total sales by a specified category (e.g., Site, Intervention).
-#' @param df Data frame containing the sales data.
-#' @param category The name of the column to group by, as a string.
-#' @return A data frame with the total sales summarized by the specified category.
-summarise_sales <- function(df, category) {
-  stat <- df %>%
-    group_by(.data[[category]]) %>%
-    summarise(Total_Sales = sum(Total, na.rm = TRUE), .groups = 'drop')
-  return(stat)
-}
-summarise_sales(beverage_sales, "Site")
-summarise_sales(beverage_sales, "Intervention")
-```
-
-
-```{r Handle Missing Data}
-#' Handle Missing Data 
-#'
-#' Provides an overview and simple strategies for handling missing data.
-#' @param df Data frame with potential missing values.
-#' @return Data frame with missing values handled.
-handle_missing_data <- function(df) {
-  # Overview of missing data
-  missing_overview <- sapply(df, function(x) sum(is.na(x)))
-  
-  # Strategies for imputation or removal?
-  
-  return(list(MissingOverview = missing_overview, CleanedData = df))
-}
-handle_missing_data(beverage_sales)$MissingOverview
-```
-
-
-```{r Sales Boxplot}
-#' Plot Boxplot for Sales Distribution by Site and Intervention
-#'
-#' Creates a boxplot to visualize the distribution of sales by site and intervention.
-#' @param df Data frame containing the sales data.
-#' @param x_var Name of the variable to be used on the x-axis, typically interventions.
-#' @param y_var Name of the variable to be used on the y-axis, typically total sales.
-#' @param fill_var Name of the variable to be used for fill color, typically site.
-#' @param title Plot title.
-#' @param x_lab Label for the x-axis.
-#' @param y_lab Label for the y-axis.
-#' @return A ggplot object representing the boxplot.
-plot_sales_distribution <- function(df, x_var, y_var, fill_var, title = "Sales Distribution by Site and Intervention",
-                                    x_lab = "Intervention Type", y_lab = "Sales") {
-  ggplot(df, aes_string(x = x_var, y = y_var, fill = fill_var)) +
-    geom_boxplot() +
-    theme_minimal() +
-    labs(title = title, x = x_lab, y = y_lab)
-}
-plot_sales_distribution(beverage_sales, "Intervention", "Total", "Site")
-```
-
-
 ```{r Sales Scatterplot}
-#' Plot Scatter for Zero-Calorie vs Sugary Beverage Sales
-#'
-#' Creates a scatter plot to visualize the relationship between zero-calorie and sugary beverage sales, colored by site.
-#' @param df Data frame containing the beverage sales data.
-#' @param x_var Name of the variable representing zero-calorie beverage sales.
-#' @param y_var Name of the variable representing sugary beverage sales.
-#' @param color_var Name of the variable to be used for point colors, typically site.
-#' @param title Plot title.
-#' @param x_lab Label for the x-axis.
-#' @param y_lab Label for the y-axis.
-#' @return A ggplot object representing the scatter plot.
-plot_beverage_sales_comparison <- function(df, x_var, y_var, color_var, title = "Comparison of Zero-Calorie and Sugary Beverage Sales",
-                                           x_lab = "Zero-Calorie Beverage Sales", y_lab = "Sugary Beverage Sales") {
-  ggplot(df, aes_string(x = x_var, y = y_var, color = color_var)) +
-    geom_point() +
-    theme_minimal() +
-    labs(title = title, x = x_lab, y = y_lab)
-}
 plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
 ```
 
-```{r Execute EDA}
-#' Execute EDA Functions
-#'
-#' Calls the defined functions to perform EDA on the dataset.
-execute_eda <- function(df) {
-  summary <- summarize_data(df)
-  print(summary)
-  
-  plot_histograms(df)
-  boxplots_by_category(df, "Site") # Replace "Site" with the appropriate categorical variable if different
-  scatter_plots(df)
-  missing_data <- handle_missing_data(df)
-  
-  print(missing_data$MissingOverview)
-}
-# execute_eda(beverage_sales)
+### correlation plot (Johnson)
+   
+
+```{r correlation}
+
+```
+
+
+### imbalance/missing value (Sarah)  visdat
+
+```{r data quality}
+
 ```
 
 
 
 
-**4. Formal Analysis**
-   
-   - Suggested statistical models and methods.
-   - Interpretation of results.
+### line plot for trajectory (Par)
 
-**5. Conclusions**
+
+```{r line plots}
+
+```
+   
+
+
+
+
+## 4. Formal Analysis
+
+```{r Handle Missing Data}
+# handle_missing_data(beverage_sales)$MissingOverview
+```
+
+### ITSA (Par)
+
+```{r itsa}
+
+```
+
+
+
+### GEE (Sarah)
+
+```{r gee}
+
+```
+
+
+### LMEM (Johnson)
+
+```{r lmem}
+
+```
+   
+
+## 5. Conclusions
    
    - Recommendations to the clients.
 
-**6. References**
+## 6. References
    
    - Properly formatted citations.
 
-**7. Statistical Appendix**
+## 7. Statistical Appendix
    
    - Mathematical formulas.
    - Additional tables/figures.
