@@ -9,6 +9,7 @@ output: pdf_document
 library(tidyverse)
 library(lubridate)
 library(rlang)
+library(visdat)
 source("../code/EDA.R")
 source("../code/ITSA.R")
 source("../code/GEE.R")
@@ -91,7 +92,8 @@ plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
 ### imbalance/missing value (Sarah)  visdat
 
 ```{r data quality}
-
+plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
+plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
 ```
 
 
