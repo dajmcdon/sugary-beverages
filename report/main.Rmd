@@ -10,6 +10,7 @@ library(tidyverse)
 library(lubridate)
 library(rlang)
 library(visdat)
+library(corrplot)
 source("../code/EDA.R")
 source("../code/ITSA.R")
 source("../code/GEE.R")
@@ -85,7 +86,7 @@ plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
    
 
 ```{r correlation}
-
+plot_corr_plot(beverage_sales)
 ```
 
 
