@@ -48,9 +48,9 @@ The primary outcome of interest is daily sales of bottled sugary and zero-calori
   
 
 ```{r data, include=FALSE}
-beverage_sales <- read.csv("../rawdata/june1data.csv") %>% select(Count, DofW, Site, Intervention, ZeroCal, Sugary, Total)
-
-
+beverage_sales <- read.csv("../rawdata/june1data.csv") %>% 
+  dplyr::select(Count, DofW, Site, Intervention, ZeroCal, Sugary, Total) %>% 
+  group_by(Site,Intervention) %>% mutate(duration = row_number()) %>%ungroup()
 # head(beverage_sales)
 # dim(beverage_sales)
 ```
