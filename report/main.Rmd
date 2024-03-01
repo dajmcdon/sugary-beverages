@@ -10,6 +10,7 @@ library(tidyverse)
 library(lubridate)
 library(rlang)
 library(visdat)
+library(gridExtra)
 source("../code/EDA.R")
 source("../code/ITSA.R")
 source("../code/GEE.R")
@@ -46,7 +47,9 @@ The primary outcome of interest is daily sales of bottled sugary and zero-calori
   
 
 ```{r data, include=FALSE}
-beverage_sales <- read.csv("../rawdata/june1data.csv")[,1:6]
+beverage_sales <- read.csv("../rawdata/june1data.csv") %>% select(Count, DofW, Site, Intervention, ZeroCal, Sugary, Total)
+
+
 # head(beverage_sales)
 # dim(beverage_sales)
 ```
@@ -89,11 +92,17 @@ plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
 ```
 
 
-### imbalance/missing value (Sarah)  visdat
+### Missing Values and Data Imbalance
 
-```{r data quality}
-plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
-plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
+The data has some missing data. It is important to identify what kind of missing data exists within a dataset to better understand how to handle missingness during formal analysis. It appears that the missing data qualifies as missing not at random (MNAR), meaning that the probability of any given observation being missing varies for unidentified reasons. It is also important to note from the observations counts whether or not the data appears to be balanced since imbalanced data can hinder model accuracy. Balance between sites appears to be reasonable, where some imbalance is present between interventions. Namely, the 'follow', 'wash', and 'wash2' levels are imbalanced when compared to the other interventions. 
+
+
+```{r data quality, echo=FALSE, out.width='75%', fig.width=12.5, fig.height=7.5, fig.show='hold',fig.align='center'}
+
+miss_plot1 <- plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
+miss_plot2 <- plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
+
+grid.arrange(miss_plot1, miss_plot2, ncol=2)
 ```
 
 
