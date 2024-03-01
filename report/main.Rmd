@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
-```{r setup}
+```{r setup, include = FALSE}
 library(tidyverse)
 library(lubridate)
 library(rlang)
@@ -87,10 +87,11 @@ plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
 
 ### correlation plot (Johnson)
   
-
-```{r correlation}
+The following plot investigates the correlation structure between the day of the week (`DofW`), the number of zero-calorie drinks sold (`ZeroCal`), and the number of sugary drinks sold (`Sugary`). In this plot, the size, color of the circles and number represent the strength of the correlation coefficients between the variables. The `ZeroCal` and `Sugary` variables exhibit a very strong positive correlation with a correlation coefficient of 0.97. This suggests that sales of zero-calorie and sugary drinks are closely related; when sales of one type increase, sales of the other type tend to increase in a similar fashion. Conversely, both `ZeroCal` and `Sugary` drinks show a negative correlation with `DofW`, as indicated by the coefficient of -0.39. This negative correlation suggests a tendency for the sales of both drink types to decrease on certain days of the week. 
+```{r correlation, echo=FALSE}
 plot_corr_plot(beverage_sales)
 ```
+
 
 
 ### Missing Values and Data Imbalance
