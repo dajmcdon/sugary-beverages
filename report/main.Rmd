@@ -158,6 +158,21 @@ Since the study aims to investigate the number of beverages sold at each site, t
    - Additional tables/figures.
 
 
+### GEE Model
+
+Let ${\bf Y_i}$ be the outcome variable for beverage $i$ (zero-calorie or sugared) sales.  
+
+Let $g(\cdot)$ be the log link function (Poisson or Negative Binomial). Then, for design matrix ${\bf X}$ including all revenant predictors, the model can be written more explicitly as
+
+\begin{align*}
+g(\mathbb{E}[Y_i]) &= \beta_{0i} + \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging 1})  \\
+&\hspace{3mm} + \beta_{4i} (\text{Calorie Messaging 2}) + \beta_{5i} (\text{Calorie Messaging 3}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})\\
+&\hspace{3mm} + \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
+\end{align*}
+
+
+Then $\beta_{0i}$ is the intercept. (Discount) and (Discount + Messaging) are each dummy variables to represent the discount intervention without messaging, and discount with messaging respectively. (Site B) and (Site C) are also dummy variables to indicate the site, with the baseline being site A.  
+
 
 
 
