@@ -83,7 +83,7 @@ plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
 ```
 
 ### correlation plot (Johnson)
-   
+  
 
 ```{r correlation}
 plot_corr_plot(beverage_sales)
@@ -133,6 +133,11 @@ plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRU
 
 
 ### LMEM (Johnson)
+Linear Mixed Effects (LME) models are useful for analyzing data structured in clusters in a longitudinal study. Within a LME model, fixed effects are those that are consistent across all observations, such as the global influence of intervention and the day of week. These effects are assumed to be the baseline of impact across all sites. Random effects, on the other hand, account for differences between sites or temporal fluctuations within a site that are not captured by the fixed effects.
+
+In this dataset, the five intervention methods across sites could be transformed into four indicator variables, representing the presence and absence of Discount, Additional Messaging, Calorie Display, Exercise Display. The pre-intervension period and follow-up period are treated as baseline reference observations. Variables that would be included in the LME model would be day of week, site, four intervention indicators and duration into the intervention. The model development process involves selection of fixed effect and random effect parameters, typically guided by statistical tests like the log-likelihood test. 
+
+Linear mixed effect models are used with the following assumptions: error terms is required to be normally distributed with a consistent spread, and the relationship between covariates and response are linear. These assumptions can be verified with diagnostic plots such as scatterplots and Q-Q plots of the errors.  
 
 ```{r lmem}
 
