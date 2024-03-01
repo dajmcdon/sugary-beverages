@@ -11,6 +11,7 @@ library(lubridate)
 library(rlang)
 library(visdat)
 library(corrplot)
+library(gridExtra)
 source("../code/EDA.R")
 source("../code/ITSA.R")
 source("../code/GEE.R")
@@ -47,7 +48,9 @@ The primary outcome of interest is daily sales of bottled sugary and zero-calori
   
 
 ```{r data, include=FALSE}
-beverage_sales <- read.csv("../rawdata/june1data.csv")[,1:6]
+beverage_sales <- read.csv("../rawdata/june1data.csv") %>% select(Count, DofW, Site, Intervention, ZeroCal, Sugary, Total)
+
+
 # head(beverage_sales)
 # dim(beverage_sales)
 ```
@@ -90,11 +93,17 @@ plot_corr_plot(beverage_sales)
 ```
 
 
-### imbalance/missing value (Sarah)  visdat
+### Missing Values and Data Imbalance
 
-```{r data quality}
-plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
-plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
+The data has some missing data. It is important to identify what kind of missing data exists within a dataset to better understand how to handle missingness during formal analysis. It appears that the missing data qualifies as missing not at random (MNAR), meaning that the probability of any given observation being missing varies for unidentified reasons. It is also important to note from the observations counts whether or not the data appears to be balanced since imbalanced data can hinder model accuracy. Balance between sites appears to be reasonable, where some imbalance is present between interventions. Namely, the 'follow', 'wash', and 'wash2' levels are imbalanced when compared to the other interventions. 
+
+
+```{r data quality, echo=FALSE, out.width='75%', fig.width=12.5, fig.height=7.5, fig.show='hold',fig.align='center'}
+
+miss_plot1 <- plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
+miss_plot2 <- plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
+
+grid.arrange(miss_plot1, miss_plot2, ncol=2)
 ```
 
 
@@ -127,6 +136,10 @@ plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRU
 
 ### GEE (Sarah)
 
+The Generalized Estimating Equations (GEE) approach is a convenient and relatively easy to interpret method to model longitudinal data. GEE is suitable for analyzing the data from this study since daily sales of bottled sugared beverages and zero-calorie beverages were measured repeatedly over time. GEE can be thought of as an extension of the Generalized Linear Model to longitudinal data (Columbia University). This method is particularly convenient due to its high statistical power, built-in handling of missing at random data, and its ability to account for within-subject correlation in non-normal data. 
+
+Since the study aims to investigate the number of beverages sold at each site, this method assumes an outcome of zero-calorie and sugary beverages sold. Predictors include intervention type, site, day of the week, and total beverage sales. Site, day of the week, and total beverage sales predictors allow the model to adjust for any extraneous effects and possible sale or time trends independent of the studies interventions. Wash periods are excluded from the model and total sales are used as a control instead. Since this method models count data, a log link function is most appropriate, such as the Poisson or Negative Binomial. Models may be fitted over all sites simultaneously, or as one model per site. In the latter case, the sit factor may be excluded from the model. It is appropriate to try both to examine comparable results. Once the models are fitted, the GEE method will return coefficients for every intervention or combination of interventions taken during the study. These can be interpreted to help answer the studies main objectives. Namely, to examine how each intervention affected zero-calorie and sugary beverage sales, how sales differed by site, and comparing the impacts between different interventions on zero-calorie and sugary beverages sales. Hypothesis tests can be performed on each coefficient to test intervention and site effects. A Bonferroni correction is needed to adjust for increased risk of Type I error when making multiple statistical tests. 
+
 ```{r gee}
 
 ```
@@ -151,12 +164,29 @@ Linear mixed effect models are used with the following assumptions: error terms 
 ## 6. References
    
    - Properly formatted citations.
+   
+   Columbia University Mailman School of Public Health. (n.d.). Repeated Measures Analysis. Columbia University Mailman School of Public Health. https://www.publichealth.columbia.edu/research/population-health-methods/repeated-measures-analysis
 
 ## 7. Statistical Appendix
    
    - Mathematical formulas.
    - Additional tables/figures.
 
+
+### GEE Model
+
+Let ${\bf Y_i}$ be the outcome variable for beverage $i$ (zero-calorie or sugared) sales.  
+
+Let $g(\cdot)$ be the log link function (Poisson or Negative Binomial). Then, for design matrix ${\bf X}$ including all revenant predictors, the model can be written more explicitly as
+
+\begin{align*}
+g(\mathbb{E}[Y_i]) &= \beta_{0i} + \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging 1})  \\
+&\hspace{3mm} + \beta_{4i} (\text{Calorie Messaging 2}) + \beta_{5i} (\text{Calorie Messaging 3}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})\\
+&\hspace{3mm} + \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
+\end{align*}
+
+
+Then $\beta_{0i}$ is the intercept. (Discount) and (Discount + Messaging) are each dummy variables to represent the discount intervention without messaging, and discount with messaging respectively. (Site B) and (Site C) are also dummy variables to indicate the site, with the baseline being site A.  
 
 
 
