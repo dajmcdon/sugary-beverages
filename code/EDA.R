@@ -133,3 +133,19 @@ plot_missing_data <- function(df, group_by_site= TRUE, group_by_intervention = T
   }
 }
 
+
+#' Plot correlation between variables
+#' 
+#' Creates a correlation plot based on the numerical variables within a dataframe 
+#' @param df Data frame containing the beverage sales data.
+#' @param index Boolean reflecting if an index variable exist within dataframe
+#' @return A corrplot object representing correlation between all numeric variables
+plot_corr_plot <- function(df, index = TRUE) {
+  numeric_vars <- select_if(df, is.numeric) %>% names()
+  if(index){
+    corrplot.mixed(cor(df[select_if(beverage_sales, is.numeric) %>% names()][-1], use = "complete.obs"), order = 'AOE')
+  } else {
+    corrplot.mixed(cor(df[select_if(beverage_sales, is.numeric) %>% names()], use = "complete.obs"), order = 'AOE')
+  }
+  
+}
