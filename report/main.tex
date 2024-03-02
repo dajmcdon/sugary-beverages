@@ -65,6 +65,7 @@
 \usepackage{setspace}
 \setstretch{1.5}
 \usepackage{xcolor}
+\usepackage{setspace}\singlespacing
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -369,26 +370,35 @@ effects, \(b_i\) contains random effects parameter for site \(i\). In
 this case, the expanded general parameters would be
 \[y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}\]
 where \(y_{ij}\) is the sales of beverage at site \(i\) day \(j\), \$
-\beta\emph{0 + b}\{ij\}\^{}0\$ is the fixed and random terms for
+\beta\^{}0 + b\_\{ij\}\^{}0\$ is the fixed and random terms for
 intercept, \((\beta_1 + b_{ij}^1)Treatment\) consists of the fixed and
 random terms for all four indicator variable for treatment,
 \((\beta_2 + b_{ij}^2)Day of Week\) consists of the fixed and random
 terms for each day of the week, \((\beta_3 + b_{ij}^3)Duration\)
 represents the fixed and random effect of slope for duration into a
-specific treatment. \#\#\# GEE Model
+specific treatment.
 
-Let \({\bf Y_i}\) be the outcome variable for beverage \(i\)
+\hypertarget{gee-model}{%
+\subsubsection{GEE Model}\label{gee-model}}
+
+Let \(\mathbf{Y_i}\) be the outcome variable for beverage \(i\)
 (zero-calorie or sugared) sales.
 
 Let \(g(\cdot)\) be the log link function (Poisson or Negative
-Binomial). Then, for design matrix \({\bf X}\) including all revenant
+Binomial). Then, for design matrix \(\mathbf{X}\) including all revenant
 predictors, the model can be written more explicitly as
 
-\begin{align*}
-g(\mathbb{E}[Y_i]) &= \beta_{0i} + \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging 1})  \\
-&\hspace{3mm} + \beta_{4i} (\text{Calorie Messaging 2}) + \beta_{5i} (\text{Calorie Messaging 3}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})\\
-&\hspace{3mm} + \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
-\end{align*}
+\[
+g(\mathbb{E}[Y_i]) = \beta_{0i} \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging}) 
+\]
+
+\[
++ \beta_{4i} (\text{Exercise Messaging}) + \beta_{5i} (\text{Both Calorie Messaging}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})
+\]
+
+\[
++ \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
+\]
 
 Then \(\beta_{0i}\) is the intercept. (Discount) and (Discount +
 Messaging) are each dummy variables to represent the discount
