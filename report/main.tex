@@ -73,12 +73,12 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Client Report Zero-calorie Drink Consumption Intervention},
+  pdftitle={Zero-calorie Drink Consumption Intervention Report},
   pdfauthor={Parham Pishrobat, Sarah Masri, Johnson Chen},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Client Report Zero-calorie Drink Consumption Intervention}
+\title{Zero-calorie Drink Consumption Intervention Report}
 \author{Parham Pishrobat, Sarah Masri, Johnson Chen}
 \date{2024-03-01}
 
@@ -188,7 +188,7 @@ with \texttt{DofW}, as indicated by the coefficient of -0.39. This
 negative correlation suggests a tendency for the sales of both drink
 types to decrease on certain days of the week.
 
-\includegraphics{main_files/figure-latex/correlation-1.pdf}
+\begin{center}\includegraphics{main_files/figure-latex/correlation-1} \end{center}
 
 \hypertarget{missing-values-and-data-imbalance}{%
 \subsubsection{3.3 Missing Values and Data
@@ -238,9 +238,9 @@ For more visual exploration see appendix.
 
 Overall, three models are considered for formal analysis.
 
-\hypertarget{iinterupted-times-series-analysis}{%
-\subsubsection{4.1 Iinterupted Times Series
-Analysis}\label{iinterupted-times-series-analysis}}
+\hypertarget{interupted-times-series-analysis}{%
+\subsubsection{4.1 Interupted Times Series
+Analysis}\label{interupted-times-series-analysis}}
 
 The study's design, an interrupted time series across multiple sites,
 naturally lends itself to Interrupted Time Series Analysis (ITSA). This
@@ -321,12 +321,6 @@ duration into the intervention, clustered by site. The model development
 process involves selection of fixed effect and random effect parameters,
 typically guided by statistical tests like the log-likelihood test.
 
-Linear mixed effect models are used with the following assumptions:
-error terms is required to be normally distributed with a consistent
-spread, and the relationship between covariates and response are linear.
-These assumptions can be verified with diagnostic plots such as
-scatterplots and Q-Q plots of the errors.
-
 \hypertarget{conclusions}{%
 \subsection{5. Conclusions}\label{conclusions}}
 
@@ -348,63 +342,81 @@ beverage sales by various labeling and discount strategies.
 Columbia University Mailman School of Public Health. (n.d.). Repeated
 Measures Analysis. Columbia University Mailman School of Public Health.
 \url{https://www.publichealth.columbia.edu/research/population-health-methods/repeated-measures-analysis}
+UCLA Statistical Consulting Group. (n.d.). Introduction to Linear Mixed
+Models. Retrieved March 1, 2024, from
+\url{https://stats.oarc.ucla.edu/other/mult-pkg/introduction-to-linear-mixed-models/}
+University of Virginia Library. (n.d.). Getting Started with Generalized
+Estimating Equations. Retrieved March 1, 2024, from
+\url{https://library.virginia.edu/data/articles/getting-started-with-generalized-estimating-equations}
 
 \hypertarget{statistical-appendix}{%
 \subsection{7. Statistical Appendix}\label{statistical-appendix}}
 
-\begin{itemize}
-\tightlist
-\item
-  Mathematical formulas.
-\item
-  Additional tables/figures.
-\end{itemize}
+\hypertarget{histogram-plots}{%
+\subsubsection{Histogram Plots}\label{histogram-plots}}
 
-\hypertarget{lme-model}{%
-\subsubsection{LME model}\label{lme-model}}
+The following histogram plots show the frequency distribution of sales
+for Sugary (in purple), Zero-Calorie (ZeroCal, in teal), and Total (in
+yellow) beverages. The x-axis of each histogram represents the sales
+volume, while the y-axis indicates the count of observations within each
+sales range. The pattern in all histograms is similar: most sales
+numbers cluster at the lower end of the scale, suggesting a higher
+frequency of days with fewer sales; however, the sales histograms
+exhibit a second weaker mode, indicating two common sales volumes across
+the observed period.
 
-Let \(y_i\) be the vector of measurements of response for site \(i\),
-then a Linear Mixed Effect model is written as
-\[y_i = X_i\beta + Z_i b_i + e_i\] where \(\beta\) contains fixed
-effects, \(b_i\) contains random effects parameter for site \(i\). In
-this case, the expanded general parameters would be
-\[y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}\]
-where \(y_{ij}\) is the sales of beverage at site \(i\) day \(j\), \$
-\beta\^{}0 + b\_\{ij\}\^{}0\$ is the fixed and random terms for
-intercept, \((\beta_1 + b_{ij}^1)Treatment\) consists of the fixed and
-random terms for all four indicator variable for treatment,
-\((\beta_2 + b_{ij}^2)Day of Week\) consists of the fixed and random
-terms for each day of the week, \((\beta_3 + b_{ij}^3)Duration\)
-represents the fixed and random effect of slope for duration into a
-specific treatment.
+\begin{figure}
+\centering
+\includegraphics{main_files/figure-latex/Plot-Histograms-1.pdf}
+\caption{Sales Distribution Analysis: Histograms displaying the
+frequency of sales for Sugary (purple), Zero-Calorie (teal), and Total
+combined (yellow) beverages. Each histogram reveals the distribution
+pattern of sales volumes, highlighting the bimodal nature of sales
+across all types.}
+\end{figure}
 
-\hypertarget{gee-model}{%
-\subsubsection{GEE Model}\label{gee-model}}
+\hypertarget{scatter-plot}{%
+\subsubsection{Scatter Plot}\label{scatter-plot}}
 
-Let \(\mathbf{Y_i}\) be the outcome variable for beverage \(i\)
-(zero-calorie or sugared) sales.
+The following scatter plot depicts the relationship between zero-calorie
+and sugary beverage sales at three different hospital sites: A or chop
+(purple), B or HF (blue), and C or NS (yellow). The x-axis represents
+zero-calorie beverage sales, and the y-axis represents sugary beverage
+sales. A dashed line, suggesting the line of equality, indicates where
+the sales for both types would be equal. Points above the line indicate
+higher sugary beverage sales when compared to zero-calorie ones, and
+points below the line indicate the opposite. The clustering of points
+towards the upper right suggests that for higher sales volumes, sugary
+beverages tend to sell as much as or more than zero-calorie options,
+particularly in site A (chop). The plot reveals variability in the sales
+patterns across sites, with the HF site having a more direct correlation
+between ZeroCal and Sugary sales when compared to other sites.
 
-Let \(g(\cdot)\) be the log link function (Poisson or Negative
-Binomial). Then, for design matrix \(\mathbf{X}\) including all revenant
-predictors, the model can be written more explicitly as
+\begin{figure}
+\centering
+\includegraphics{main_files/figure-latex/Sales-Scatterplot-1.pdf}
+\caption{This scatter plot contrasts zero-calorie and sugary beverage
+sales, colour-coded by the site. Each point represents the paired sales
+data for a given day, with the site-specific colour coding (chop in
+purple, HF in blue, NS in yellow) illustrating the sales trend at each
+location. The dashed diagonal line marks the parity where the sales of
+both beverage types are equal. Deviations from this line highlight the
+predominance of one beverage type over the other in daily sales.}
+\end{figure}
 
-\[
-g(\mathbb{E}[Y_i]) = \beta_{0i} \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging}) 
-\]
+\hypertarget{missing-values}{%
+\subsubsection{Missing Values}\label{missing-values}}
 
-\[
-+ \beta_{4i} (\text{Exercise Messaging}) + \beta_{5i} (\text{Both Calorie Messaging}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})
-\]
+The following plot visualizes the missing values.
 
-\[
-+ \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
-\]
+\begin{figure}
 
-Then \(\beta_{0i}\) is the intercept. (Discount) and (Discount +
-Messaging) are each dummy variables to represent the discount
-intervention without messaging, and discount with messaging
-respectively. (Site B) and (Site C) are also dummy variables to indicate
-the site, with the baseline being site A.
+{\centering \includegraphics[width=0.75\linewidth]{main_files/figure-latex/data quality-1} 
+
+}
+
+\caption{This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention.}\label{fig:data quality}
+\end{figure}
 
 \hypertarget{itsa-model}{%
 \subsubsection{ITSA Model}\label{itsa-model}}
@@ -478,70 +490,50 @@ campaigns. These covariates can be time-varying and should be included
 in the model if they are thought to confound the relationship between
 the interventions and sales.
 
-\hypertarget{histogram-plots}{%
-\subsubsection{Histogram Plots}\label{histogram-plots}}
+\hypertarget{gee-model}{%
+\subsubsection{GEE Model}\label{gee-model}}
 
-The following histogram plots show the frequency distribution of sales
-for Sugary (in purple), Zero-Calorie (ZeroCal, in teal), and Total (in
-yellow) beverages. The x-axis of each histogram represents the sales
-volume, while the y-axis indicates the count of observations within each
-sales range. The pattern in all histograms is similar: most sales
-numbers cluster at the lower end of the scale, suggesting a higher
-frequency of days with fewer sales; however, the sales histograms
-exhibit a second weaker mode, indicating two common sales volumes across
-the observed period.
+Let \(\mathbf{Y_i}\) be the outcome variable for beverage \(i\)
+(zero-calorie or sugared) sales.
 
-\begin{figure}
-\centering
-\includegraphics{main_files/figure-latex/Plot-Histograms-1.pdf}
-\caption{Sales Distribution Analysis: Histograms displaying the
-frequency of sales for Sugary (purple), Zero-Calorie (teal), and Total
-combined (yellow) beverages. Each histogram reveals the distribution
-pattern of sales volumes, highlighting the bimodal nature of sales
-across all types.}
-\end{figure}
+Let \(g(\cdot)\) be the log link function (Poisson or Negative
+Binomial). Then, for design matrix \(\mathbf{X}\) including all revenant
+predictors, the model can be written more explicitly as
 
-\hypertarget{scatter-plot}{%
-\subsubsection{Scatter Plot}\label{scatter-plot}}
+\[
+g(\mathbb{E}[Y_i]) = \beta_{0i} + \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging}) 
+\]
 
-The following scatter plot depicts the relationship between zero-calorie
-and sugary beverage sales at three different hospital sites: A or chop
-(purple), B or HF (blue), and C or NS (yellow). The x-axis represents
-zero-calorie beverage sales, and the y-axis represents sugary beverage
-sales. A dashed line, suggesting the line of equality, indicates where
-the sales for both types would be equal. Points above the line indicate
-higher sugary beverage sales when compared to zero-calorie ones, and
-points below the line indicate the opposite. The clustering of points
-towards the upper right suggests that for higher sales volumes, sugary
-beverages tend to sell as much as or more than zero-calorie options,
-particularly in site A (chop). The plot reveals variability in the sales
-patterns across sites, with the HF site having a more direct correlation
-between ZeroCal and Sugary sales when compared to other sites.
+\[
++ \beta_{4i} (\text{Exercise Messaging}) + \beta_{5i} (\text{Both Calorie Messaging}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})
+\]
 
-\begin{figure}
-\centering
-\includegraphics{main_files/figure-latex/Sales-Scatterplot-1.pdf}
-\caption{This scatter plot contrasts zero-calorie and sugary beverage
-sales, colour-coded by the site. Each point represents the paired sales
-data for a given day, with the site-specific colour coding (chop in
-purple, HF in blue, NS in yellow) illustrating the sales trend at each
-location. The dashed diagonal line marks the parity where the sales of
-both beverage types are equal. Deviations from this line highlight the
-predominance of one beverage type over the other in daily sales.}
-\end{figure}
+\[
++ \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
+\]
 
-\hypertarget{missing-values}{%
-\subsubsection{Missing Values}\label{missing-values}}
+Then \(\beta_{0i}\) is the intercept. (Discount) and (Discount +
+Messaging) are each dummy variables to represent the discount
+intervention without messaging, and discount with messaging
+respectively. (Site B) and (Site C) are also dummy variables to indicate
+the site, with the baseline being site A.
 
-The following plot visualizes the missing values.
+\hypertarget{lme-model}{%
+\subsubsection{LME model}\label{lme-model}}
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.75\linewidth]{main_files/figure-latex/data quality-1} 
-
-}
-
-\caption{This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention.}\label{fig:data quality}
-\end{figure}
+Let \(y_i\) be the vector of measurements of response for site \(i\),
+then a Linear Mixed Effect model is written as
+\[y_i = X_i\beta + Z_i b_i + e_i\] where \(\beta\) contains fixed
+effects, \(b_i\) contains random effects parameter for site \(i\). In
+this case, the expanded general parameters would be
+\[y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}\]
+where \(y_{ij}\) is the sales of beverage at site \(i\) day \(j\), \$
+\beta\^{}0 + b\_\{ij\}\^{}0\$ is the fixed and random terms for
+intercept, \((\beta_1 + b_{ij}^1)Treatment\) consists of the fixed and
+random terms for all four indicator variable for treatment,
+\((\beta_2 + b_{ij}^2)Day of Week\) consists of the fixed and random
+terms for each day of the week, \((\beta_3 + b_{ij}^3)Duration\)
+represents the fixed and random effect of slope for duration into a
+specific treatment.
 
 \end{document}
