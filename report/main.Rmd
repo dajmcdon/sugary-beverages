@@ -169,6 +169,12 @@ Linear mixed effect models are used with the following assumptions: error terms 
 ## 5. Conclusions
    
    - Recommendations to the clients.
+   
+
+The recommended statistical process for assessing the impact of strategies to promote zero-calorie beverages over their sugary alternatives involves both exploratory and formal analyses. An exploratory data analysis will help identify underlying patterns in the data, such as correlation and missingness. The formal analysis is recommended to include three models: interrupted time series analysis, generalized estimating equations, and the linear mixed-effects model. Each of these models is capable of handling time-series and longitudinal data. Results from these models can be tested and compared for security. These analyses will answer if the data may indicate an impact on beverage sales by various labeling and discount strategies. 
+   
+   
+   
 
 ## 6. References
    
