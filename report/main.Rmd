@@ -39,11 +39,13 @@ source("../code/LMEM.R")
 
 
 
+
 ## 1. Introduction
 
 Concerns around sugar consumption and its health implications have prompted many interventions to shift consumer behaviour away from sugary beverages. The current study investigates the effectiveness of various strategies to encourage consumers to choose zero-calorie beverages over sugary alternatives. In particular, the research question focuses on the impact of two strategies to inform consumers about calorie content through visual presentations: posters highlighting either the calorie content or the physical activity required to burn calories. Furthermore, the effectiveness of price discounts on behaviour is explored, both independently and in conjunction with explanatory messaging. 
 
 ## 2. Data Description and Summaries
+
 
 The primary outcome of interest is daily sales of bottled sugary and zero-calorie beverages, starting October 27th for 30 weeks. The dataset contains 631 sales counts for zero-calorie, sugary, and all drinks, sale location, day of the week, and the type of intervention applied. The study period includes a baseline data collection phase, intervention phases to elicit behaviour change, and washout periods to assess the persistence of intervention effects. The recorded variables consist of sales count, day of the week, site location, type of intervention, and beverage category (zero-calorie and sugary options). The price interventions consist of two periods of 10% discount on zero-calorie beverages, with one phase providing additional explanatory messaging about the discount. The calorie messaging interventions provided information on the caloric content of sugary drinks, the physical activity required to burn off these calories, and a combination of both strategies.
 
@@ -76,7 +78,6 @@ The following boxplots represent the distribution of sugary and zero-calorie bev
 ```{r Boxplots, fig.cap="The boxplots display the sales distribution of Sugary and Zero-Calorie beverages across various interventions. Each intervention is colour-coded and shows the range of sales data with the central line representing the median sales.", echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
 boxplots_by_category(beverage_sales, responses = c("ZeroCal", "Sugary"), category = "Intervention")
 ```
-
 
 
 ### 3.2 Correlation Plot 
@@ -138,8 +139,8 @@ Since the study aims to investigate the number of beverages sold at each site, t
 
 ```
 
-
 ### 4.3 Linear Mixed Effects Model
+
 
 Linear Mixed Effects (LME) models are useful for analyzing data structured in clusters in a longitudinal study. Within a LME model, fixed effects are those that are consistent across all observations, such as the global influence of intervention and the day of week. These effects are assumed to be the baseline of impact across all sites. Random effects, on the other hand, account for differences between sites or temporal fluctuations within a site that are not captured by the fixed effects.
 
@@ -171,25 +172,27 @@ The recommended statistical process for assessing the impact of strategies to pr
 
 ### LME model
 
-Let $y_i$ be the vector of measurements of response for site $i$, then a Linear Mixed Effect model is written as
-$$y_i = X_i\beta + Z_i b_i + e_i$$
-where $\beta$ contains fixed effects, $b_i$ contains random effects parameter for site $i$. In this case, the expanded general parameters would be
-$$y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}$$
-where $y_{ij}$ is the sales of beverage at site $i$ day $j$, $ \beta_0 + b_{ij}^0$ is the fixed and random terms for intercept, $(\beta_1 + b_{ij}^1)Treatment$ consists of the fixed and random terms for all four indicator variable for treatment, $(\beta_2 + b_{ij}^2)Day of Week$ consists of the fixed and random terms for each day of the week, $(\beta_3 + b_{ij}^3)Duration$ represents the fixed and random effect of slope for duration into a specific treatment. 
+Let $y_i$ be the vector of measurements of response for site $i$, then a Linear Mixed Effect model is written as $$y_i = X_i\beta + Z_i b_i + e_i$$ where $\beta$ contains fixed effects, $b_i$ contains random effects parameter for site $i$. In this case, the expanded general parameters would be $$y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}$$ where $y_{ij}$ is the sales of beverage at site $i$ day $j$, $ \beta^0 + b_{ij}^0$ is the fixed and random terms for intercept, $(\beta_1 + b_{ij}^1)Treatment$ consists of the fixed and random terms for all four indicator variable for treatment, $(\beta_2 + b_{ij}^2)Day of Week$ consists of the fixed and random terms for each day of the week, $(\beta_3 + b_{ij}^3)Duration$ represents the fixed and random effect of slope for duration into a specific treatment.
+
 ### GEE Model
 
-Let ${\bf Y_i}$ be the outcome variable for beverage $i$ (zero-calorie or sugared) sales.  
+Let $\mathbf{Y_i}$ be the outcome variable for beverage $i$ (zero-calorie or sugared) sales.
 
-Let $g(\cdot)$ be the log link function (Poisson or Negative Binomial). Then, for design matrix ${\bf X}$ including all revenant predictors, the model can be written more explicitly as
+Let $g(\cdot)$ be the log link function (Poisson or Negative Binomial). Then, for design matrix $\mathbf{X}$ including all revenant predictors, the model can be written more explicitly as
 
-\begin{align*}
-g(\mathbb{E}[Y_i]) &= \beta_{0i} + \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging 1})  \\
-&\hspace{3mm} + \beta_{4i} (\text{Calorie Messaging 2}) + \beta_{5i} (\text{Calorie Messaging 3}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})\\
-&\hspace{3mm} + \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
-\end{align*}
+$$
+g(\mathbb{E}[Y_i]) = \beta_{0i} \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging}) 
+$$
 
+$$
++ \beta_{4i} (\text{Exercise Messaging}) + \beta_{5i} (\text{Both Calorie Messaging}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})
+$$
 
-Then $\beta_{0i}$ is the intercept. (Discount) and (Discount + Messaging) are each dummy variables to represent the discount intervention without messaging, and discount with messaging respectively. (Site B) and (Site C) are also dummy variables to indicate the site, with the baseline being site A.  
+$$
++ \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
+$$
+
+Then $\beta_{0i}$ is the intercept. (Discount) and (Discount + Messaging) are each dummy variables to represent the discount intervention without messaging, and discount with messaging respectively. (Site B) and (Site C) are also dummy variables to indicate the site, with the baseline being site A.
 
 
 ### ITSA Model
