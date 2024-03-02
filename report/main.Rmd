@@ -99,7 +99,7 @@ plot_corr_plot(beverage_sales)
 The data has some missing data. It is important to identify what kind of missing data exists within a dataset to better understand how to handle missingness during formal analysis. It appears that the missing data qualifies as missing not at random (MNAR), meaning that the probability of any given observation being missing varies for unidentified reasons. It is also important to note from the observations counts whether or not the data appears to be balanced since imbalanced data can hinder model accuracy. Balance between sites appears to be reasonable, where some imbalance is present between interventions. Namely, the 'follow', 'wash', and 'wash2' levels are imbalanced when compared to the other interventions. 
 
 
-```{r data quality, echo=FALSE, out.width='75%', fig.width=12.5, fig.height=7.5, fig.show='hold',fig.align='center'}
+```{r data quality, echo=FALSE, out.width='75%', fig.width=12.5, fig.height=7.5, fig.show='hold',fig.align='center', fig.cap="This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention."}
 
 miss_plot1 <- plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
 miss_plot2 <- plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
