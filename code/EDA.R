@@ -122,8 +122,9 @@ plot_beverage_sales_comparison <- function(df, x_var, y_var, color_var) {
   p <- ggplot(df, aes(x = !!sym(x_var), y = !!sym(y_var), color = !!sym(color_var))) + 
     geom_point(alpha = 0.5, na.rm = T) +
     geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "black") +
-    scale_color_viridis(discrete = TRUE) +
+    scale_color_viridis(discrete = TRUE, begin = 0.2, end = 0.8) +
     theme_minimal() +
+    theme(legend.position = "bottom") + 
     labs(title = paste("Comparison of", x_var, "and", y_var, "Sales"),
          x = x_var, 
          y = y_var)
