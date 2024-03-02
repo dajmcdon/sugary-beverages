@@ -73,44 +73,29 @@ Exploratory Data Analysis (EDA) is an essential precursor to formal statistical 
 
 The following boxplots represent the distribution of sugary and zero-calorie beverage sales across different intervention strategies. Each boxplot captures the sales data variability with the central line denoting the median, the edges of the box indicating the interquartile range (IQR), and the whiskers extending to the furthest points that are not considered outliers. Outliers are individual points beyond the whiskers. Note that due to the bimodality of sales, the boxplot incorrectly indicates many outliers. The interventions, labelled on the x-axis, include baseline (preint), discount & messaging (dismes), washout period (wash), the discount only (dis), second washout (wash2), follow up (follow), calorie content poster (cal), the exercise required to burn the calorie content (excer), and combination of the two (both). 
 
-```{r Boxplots, fig.cap="The boxplots display the sales distribution of Sugary and Zero-Calorie beverages across various interventions. Each intervention is colour-coded and shows the range of sales data, warning=FALSE, with the central line representing the median sales.", echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
+```{r Boxplots, fig.cap="The boxplots display the sales distribution of Sugary and Zero-Calorie beverages across various interventions. Each intervention is colour-coded and shows the range of sales data with the central line representing the median sales.", echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
 boxplots_by_category(beverage_sales, responses = c("ZeroCal", "Sugary"), category = "Intervention")
 ```
 
-### 3.2 Scatter Plot
-
-The following scatter plot depicts the relationship between zero-calorie and sugary beverage sales at three different hospital sites: A or chop (purple), B or HF (blue), and C or NS (yellow). The x-axis represents zero-calorie beverage sales, and the y-axis represents sugary beverage sales. A dashed line, suggesting the line of equality, indicates where the sales for both types would be equal. Points above the line indicate higher sugary beverage sales when compared to zero-calorie ones, and points below the line indicate the opposite. The clustering of points towards the upper right suggests that for higher sales volumes, sugary beverages tend to sell as much as or more than zero-calorie options, particularly in site A (chop). The plot reveals variability in the sales patterns across sites, with the HF site having a more direct correlation between ZeroCal and Sugary sales when compared to other sites.
 
 
-```{r Sales-Scatterplot, fig.cap="This scatter plot contrasts zero-calorie and sugary beverage sales, colour-coded by the site. Each point represents the paired sales data for a given day, with the site-specific colour coding (chop in purple, HF in blue, NS in yellow) illustrating the sales trend at each location. The dashed diagonal line marks the parity where the sales of both beverage types are equal. Deviations from this line highlight the predominance of one beverage type over the other in daily sales.", echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
-plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
-```
-
-
-### 3.3 Correlation Plot 
+### 3.2 Correlation Plot 
   
 The following plot investigates the correlation structure between the day of the week (`DofW`), the number of zero-calorie drinks sold (`ZeroCal`), and the number of sugary drinks sold (`Sugary`). In this plot, the size, color of the circles and number represent the strength of the correlation coefficients between the variables. The `ZeroCal` and `Sugary` variables exhibit a very strong positive correlation with a correlation coefficient of 0.97. This suggests that sales of zero-calorie and sugary drinks are closely related; when sales of one type increase, sales of the other type tend to increase in a similar fashion. Conversely, both `ZeroCal` and `Sugary` drinks show a negative correlation with `DofW`, as indicated by the coefficient of -0.39. This negative correlation suggests a tendency for the sales of both drink types to decrease on certain days of the week. 
+
 ```{r correlation, echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
 plot_corr_plot(beverage_sales)
 ```
 
 
 
-### 3.4 Missing Values and Data Imbalance
+### 3.3 Missing Values and Data Imbalance
 
-The data has some missing data. It is important to identify what kind of missing data exists within a dataset to better understand how to handle missingness during formal analysis. It appears that the missing data qualifies as missing not at random (MNAR), meaning that the probability of any given observation being missing varies for unidentified reasons. It is also important to note from the observations counts whether or not the data appears to be balanced since imbalanced data can hinder model accuracy. Balance between sites appears to be reasonable, where some imbalance is present between interventions. Namely, the 'follow', 'wash', and 'wash2' levels are imbalanced when compared to the other interventions. 
-
-
-```{r data quality, echo=FALSE, out.width='75%', fig.width=12.5, fig.height=7.5, fig.show='hold',fig.align='center', fig.cap="This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention."}
-
-miss_plot1 <- plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
-miss_plot2 <- plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
-
-grid.arrange(miss_plot1, miss_plot2, ncol=2)
-```
+The data has some missing data. It is important to identify what kind of missing data exists within a dataset to better understand how to handle missingness during formal analysis. It appears that the missing data qualifies as missing not at random (MNAR), meaning that the probability of any given observation being missing varies for unidentified reasons. It is also important to note from the observations counts whether or not the data appears to be balanced since imbalanced data can hinder model accuracy. Balance between sites appears to be reasonable, where some imbalance is present between interventions. Namely, the 'follow', 'wash', and 'wash2' levels are imbalanced when compared to the other interventions (see figure in appendix).
 
 
-### 3.5 Time Series Plot 
+
+### 3.4 Time Series Plot 
 
 The following stacked line plot represents the sales time series of zero-calorie and sugary beverages across different sites. Each line represents the sales trajectory of one beverage type—green for zero-calorie and blue for sugary drinks. The x-axis represents time (in days), and the y-axis represents the sales volume. Dashed vertical lines indicate the start of different interventions, labelled as dismes (discount & messaging), dis (only discount), cal (calorie content poster), exer (exercise-based posters), and both. The interventions appear to influence sales, as suggested by changes in the lines' trajectories post-intervention. The plots are faceted by site, allowing for a comparative view of sales patterns across different locations.
 
@@ -118,6 +103,8 @@ The following stacked line plot represents the sales time series of zero-calorie
 plot_sales_time_series(beverage_sales)
 ```
 
+
+For more visual exploration see appendix.
 
 ## 4. Formal Analysis
 
@@ -255,4 +242,28 @@ The following histogram plots show the frequency distribution of sales for Sugar
 
 ```{r Plot-Histograms, fig.cap = "Sales Distribution Analysis: Histograms displaying the frequency of sales for Sugary (purple), Zero-Calorie (teal), and Total combined (yellow) beverages. Each histogram reveals the distribution pattern of sales volumes, highlighting the bimodal nature of sales across all types.", fig.label='fig:hist-plot', echo=FALSE,  message=FALSE, warning=FALSE}
 plot_histograms(beverage_sales, var_names = c("Sugary", "ZeroCal", "Total"))
+```
+
+
+### Scatter Plot
+
+The following scatter plot depicts the relationship between zero-calorie and sugary beverage sales at three different hospital sites: A or chop (purple), B or HF (blue), and C or NS (yellow). The x-axis represents zero-calorie beverage sales, and the y-axis represents sugary beverage sales. A dashed line, suggesting the line of equality, indicates where the sales for both types would be equal. Points above the line indicate higher sugary beverage sales when compared to zero-calorie ones, and points below the line indicate the opposite. The clustering of points towards the upper right suggests that for higher sales volumes, sugary beverages tend to sell as much as or more than zero-calorie options, particularly in site A (chop). The plot reveals variability in the sales patterns across sites, with the HF site having a more direct correlation between ZeroCal and Sugary sales when compared to other sites.
+
+
+```{r Sales-Scatterplot, fig.cap="This scatter plot contrasts zero-calorie and sugary beverage sales, colour-coded by the site. Each point represents the paired sales data for a given day, with the site-specific colour coding (chop in purple, HF in blue, NS in yellow) illustrating the sales trend at each location. The dashed diagonal line marks the parity where the sales of both beverage types are equal. Deviations from this line highlight the predominance of one beverage type over the other in daily sales.", echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
+plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
+```
+
+
+### Missing Values
+
+The following plot visualizes the missing values.
+
+
+```{r data quality, echo=FALSE, out.width='75%', fig.width=12.5, fig.height=7.5, fig.show='hold',fig.align='center', fig.cap="This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention."}
+
+miss_plot1 <- plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
+miss_plot2 <- plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
+
+grid.arrange(miss_plot1, miss_plot2, ncol=2)
 ```
