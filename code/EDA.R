@@ -60,7 +60,7 @@ boxplots_by_category <- function(df, responses, category) {
   
   # Create a long format data frame suitable for faceting
   df_long <- df %>%
-    pivot_longer(cols = responses, names_to = "Response", values_to = "Sales")
+    pivot_longer(cols = all_of(responses), names_to = "Response", values_to = "Sales")
   
   p <- ggplot(df_long, aes(x = !!sym(category), y = Sales, fill = !!sym(category))) + 
     geom_boxplot(na.rm = TRUE) +
