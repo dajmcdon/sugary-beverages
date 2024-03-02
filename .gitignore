@@ -39,4 +39,5 @@ vignettes/*.pdf
 .Renviron
 
 report/*.tex
-/report/*main_files
+report/*main_files
+report/.DS_Store
