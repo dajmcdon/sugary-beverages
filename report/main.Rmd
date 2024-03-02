@@ -166,9 +166,6 @@ The recommended statistical process for assessing the impact of strategies to pr
    
 
 ## 7. Statistical Appendix
-   
-   - Mathematical formulas.
-   - Additional tables/figures.
 
 ### LME model
 
