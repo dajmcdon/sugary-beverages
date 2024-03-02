@@ -1,5 +1,5 @@
 ---
-title: "Client Report (Placeholder)"
+title: "Client Report Zero-calorie Drink Consumption Intervention"
 author: "Parham Pishrobat, Sarah Masri, Johnson Chen"
 date: "`r Sys.Date()`"
 output: pdf_document
@@ -22,7 +22,7 @@ source("../code/LMEM.R")
 ```
 
 
-
+\newpage
 
 ## Introduction
 
@@ -99,7 +99,7 @@ plot_corr_plot(beverage_sales)
 The data has some missing data. It is important to identify what kind of missing data exists within a dataset to better understand how to handle missingness during formal analysis. It appears that the missing data qualifies as missing not at random (MNAR), meaning that the probability of any given observation being missing varies for unidentified reasons. It is also important to note from the observations counts whether or not the data appears to be balanced since imbalanced data can hinder model accuracy. Balance between sites appears to be reasonable, where some imbalance is present between interventions. Namely, the 'follow', 'wash', and 'wash2' levels are imbalanced when compared to the other interventions. 
 
 
-```{r data quality, echo=FALSE, out.width='75%', fig.width=12.5, fig.height=7.5, fig.show='hold',fig.align='center'}
+```{r data quality, echo=FALSE, out.width='75%', fig.width=12.5, fig.height=7.5, fig.show='hold',fig.align='center', fig.cap="This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention."}
 
 miss_plot1 <- plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
 miss_plot2 <- plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
@@ -157,7 +157,7 @@ Since the study aims to investigate the number of beverages sold at each site, t
 ### LMEM (Johnson)
 Linear Mixed Effects (LME) models are useful for analyzing data structured in clusters in a longitudinal study. Within a LME model, fixed effects are those that are consistent across all observations, such as the global influence of intervention and the day of week. These effects are assumed to be the baseline of impact across all sites. Random effects, on the other hand, account for differences between sites or temporal fluctuations within a site that are not captured by the fixed effects.
 
-In this dataset, the five intervention methods across sites could be transformed into four indicator variables, representing the presence and absence of Discount, Additional Messaging, Calorie Display, Exercise Display. The pre-intervension period and follow-up period are treated as baseline reference observations. Variables that would be included in the LME model would be day of week, site, four intervention indicators and duration into the intervention. The model development process involves selection of fixed effect and random effect parameters, typically guided by statistical tests like the log-likelihood test. 
+In this dataset, the five intervention methods across sites could be transformed into four indicator variables, representing the presence and absence of Discount, Additional Messaging, Calorie Display, Exercise Display. The pre-intervension period and follow-up period are treated as baseline reference observations. Variables that would be included in the LME model would be day of week, four intervention indicators and duration into the intervention, clustered by site. The model development process involves selection of fixed effect and random effect parameters, typically guided by statistical tests like the log-likelihood test. 
 
 Linear mixed effect models are used with the following assumptions: error terms is required to be normally distributed with a consistent spread, and the relationship between covariates and response are linear. These assumptions can be verified with diagnostic plots such as scatterplots and Q-Q plots of the errors.  
 
@@ -169,6 +169,12 @@ Linear mixed effect models are used with the following assumptions: error terms 
 ## 5. Conclusions
    
    - Recommendations to the clients.
+   
+
+The recommended statistical process for assessing the impact of strategies to promote zero-calorie beverages over their sugary alternatives involves both exploratory and formal analyses. An exploratory data analysis will help identify underlying patterns in the data, such as correlation and missingness. The formal analysis is recommended to include three models: interrupted time series analysis, generalized estimating equations, and the linear mixed-effects model. Each of these models is capable of handling time-series and longitudinal data. Results from these models can be tested and compared for security. These analyses will answer if the data may indicate an impact on beverage sales by various labeling and discount strategies. 
+   
+   
+   
 
 ## 6. References
    
@@ -181,7 +187,13 @@ Linear mixed effect models are used with the following assumptions: error terms 
    - Mathematical formulas.
    - Additional tables/figures.
 
+### LME model
 
+Let $y_i$ be the vector of measurements of response for site $i$, then a Linear Mixed Effect model is written as
+$$y_i = X_i\beta + Z_i b_i + e_i$$
+where $\beta$ contains fixed effects, $b_i$ contains random effects parameter for site $i$. In this case, the expanded general parameters would be
+$$y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}$$
+where $y_{ij}$ is the sales of beverage at site $i$ day $j$, $ \beta_0 + b_{ij}^0$ is the fixed and random terms for intercept, $(\beta_1 + b_{ij}^1)Treatment$ consists of the fixed and random terms for all four indicator variable for treatment, $(\beta_2 + b_{ij}^2)Day of Week$ consists of the fixed and random terms for each day of the week, $(\beta_3 + b_{ij}^3)Duration$ represents the fixed and random effect of slope for duration into a specific treatment. 
 ### GEE Model
 
 Let ${\bf Y_i}$ be the outcome variable for beverage $i$ (zero-calorie or sugared) sales.  
