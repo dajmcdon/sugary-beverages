@@ -26,19 +26,9 @@ source("../code/LMEM.R")
 
 ## Introduction
 
-   - Background of the study.
-   - Objective(s) of the study.
-   - Statistical questions to answer.
-
 Concerns around sugar consumption and its health implications have prompted many interventions to shift consumer behaviour away from sugary beverages. The current study investigates the effectiveness of various strategies to encourage consumers to choose zero-calorie beverages over sugary alternatives. In particular, the research question focuses on the impact of two strategies to inform consumers about calorie content through visual presentations: posters highlighting either the calorie content or the physical activity required to burn calories. Furthermore, the effectiveness of price discounts on behaviour is explored, both independently and in conjunction with explanatory messaging. 
 
 ## Data Description and Summaries
-
-   - Data collection method.
-   - Study design.
-   - Sample size.
-   - Variables measured.
-   - Missing data.
 
 The primary outcome of interest is daily sales of bottled sugary and zero-calorie beverages, starting October 27th for 30 weeks. The dataset contains 631 sales counts for zero-calorie, sugary, and all drinks, sale location, day of the week, and the type of intervention applied. The study period includes a baseline data collection phase, intervention phases to elicit behaviour change, and washout periods to assess the persistence of intervention effects. The recorded variables consist of sales count, day of the week, site location, type of intervention, and beverage category (zero-calorie and sugary options). The price interventions consist of two periods of 10% discount on zero-calorie beverages, with one phase providing additional explanatory messaging about the discount. The calorie messaging interventions provided information on the caloric content of sugary drinks, the physical activity required to burn off these calories, and a combination of both strategies.
 
@@ -65,7 +55,7 @@ beverage_sales <- read.csv("../rawdata/june1data.csv") %>%
 
 Exploratory Data Analysis (EDA) is an essential precursor to formal statistical methods, uncovering underlying patterns and outliers in the data. It ensures the subsequent analysis is built on a solid foundation of understanding, thereby enhancing the reliability of the findings.
 
-### histogram and scatter plots, boxplot (Par; almost done)
+### histogram and scatter plots, boxplot
 
 The following histogram plots show the frequency distribution of sales for Sugary (in purple), Zero-Calorie (ZeroCal, in teal), and Total (in yellow) beverages. The x-axis of each histogram represents the sales volume, while the y-axis indicates the count of observations within each sales range. The pattern in all histograms is similar:  most sales numbers cluster at the lower end of the scale, suggesting a higher frequency of days with fewer sales; however, the sales histograms exhibit a second weaker mode, indicating two common sales volumes across the observed period.
 
@@ -85,10 +75,10 @@ plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
 ```
 
 
-### correlation plot (Johnson)
+### correlation plot
   
-The following plot investigates the correlation structure between the day of the week (`DofW`), the number of zero-calorie drinks sold (`ZeroCal`), and the number of sugary drinks sold (`Sugary`). In this plot, the size, color of the circles and number represent the strength of the correlation coefficients between the variables. The `ZeroCal` and `Sugary` variables exhibit a very strong positive correlation with a correlation coefficient of 0.97. This suggests that sales of zero-calorie and sugary drinks are closely related; when sales of one type increase, sales of the other type tend to increase in a similar fashion. Conversely, both `ZeroCal` and `Sugary` drinks show a negative correlation with `DofW`, as indicated by the coefficient of -0.39. This negative correlation suggests a tendency for the sales of both drink types to decrease on certain days of the week. 
-```{r correlation, echo=FALSE}
+The following plot investigates the correlation structure between the day of the week (`DofW`), the number of zero-calorie drinks sold (`ZeroCal`), and the number of sugary drinks sold (`Sugary`). In this plot, the size, color of the circles and number represent the strength of the correlation coefficients between the variables. The `ZeroCal` and `Sugary` variables exhibit a very strong positive correlation with a correlation coefficient of 0.97. This suggests that sales of zero-calorie and sugary drinks are closely related; when sales of one type increase, sales of the other type tend to increase in a similar fashion. Conversely, both `ZeroCal` and `Sugary` drinks show a negative correlation with `DofW`, as indicated by the coefficient of -0.39. This negative correlation suggests a tendency for the sales of both drink types to decrease on certain days of the week. Furthermore, there is strong positive correlation between `ZeroCal` and `Sugary` with `Total` variable, as expected when the total sales count increases, sales count of both `ZeroCal` and `Sugary` drinks tend to increase as well.
+```{r correlation,fig.cap="Correlation plot of Numeric Variables",fig.height=2.5 echo=FALSE}
 plot_corr_plot(beverage_sales)
 ```
 
@@ -110,7 +100,7 @@ grid.arrange(miss_plot1, miss_plot2, ncol=2)
 
 
 
-### line plot for trajectory (Par)
+### line plot for trajectory
 
 
 The following stacked line plot represents the sales time series of zero-calorie and sugary beverages across different sites. Each line represents the sales trajectory of one beverage type—green for zero-calorie and blue for sugary drinks. The x-axis represents time (in days), and the y-axis represents the sales volume. Dashed vertical lines indicate the start of different interventions, labelled as dismes (discount & messaging), dis (only discount), cal (calorie content poster), exer (exercise-based posters), and both. The interventions appear to influence sales, as suggested by changes in the lines' trajectories post-intervention. The plots are faceted by site, allowing for a comparative view of sales patterns across different locations.
@@ -129,7 +119,7 @@ plot_sales_time_series(beverage_sales)
 # handle_missing_data(beverage_sales)$MissingOverview
 ```
 
-### ITSA (Par)
+### ITSA
 
 The study's quasi-experimental design, characterized by an interrupted time-series multi-site approach, inherently supports the use of Interrupted Time Series Analysis (ITSA). ITSA is adept at handling the complexities of such designs, where the lack of randomization might otherwise confound the interpretation of the interventions' effectiveness. The design's strength lies in capturing data at multiple time points across several sites, offering a rich longitudinal view that ITSA can exploit to distinguish the signal of the interventions amidst the noise of underlying trends. This is particularly pertinent when evaluating public health strategies, such as those aimed at influencing beverage choices, where external factors and pre-intervention trends could otherwise obscure the true effect of the interventions. ITSA's capacity to parse out these effects and assess immediate and long-term changes in response to interventions makes it a superior choice for this study over other models that might not account for time-dependent trends or the autocorrelation within time-series data.
 
@@ -143,7 +133,7 @@ Expanding on this, ITSA's versatility allows for the incorporation of site-speci
 
 
 
-### GEE (Sarah)
+### GEE
 
 The Generalized Estimating Equations (GEE) approach is a convenient and relatively easy to interpret method to model longitudinal data. GEE is suitable for analyzing the data from this study since daily sales of bottled sugared beverages and zero-calorie beverages were measured repeatedly over time. GEE can be thought of as an extension of the Generalized Linear Model to longitudinal data (Columbia University). This method is particularly convenient due to its high statistical power, built-in handling of missing at random data, and its ability to account for within-subject correlation in non-normal data. 
 
@@ -154,7 +144,7 @@ Since the study aims to investigate the number of beverages sold at each site, t
 ```
 
 
-### LMEM (Johnson)
+### LMEM
 Linear Mixed Effects (LME) models are useful for analyzing data structured in clusters in a longitudinal study. Within a LME model, fixed effects are those that are consistent across all observations, such as the global influence of intervention and the day of week. These effects are assumed to be the baseline of impact across all sites. Random effects, on the other hand, account for differences between sites or temporal fluctuations within a site that are not captured by the fixed effects.
 
 In this dataset, the five intervention methods across sites could be transformed into four indicator variables, representing the presence and absence of Discount, Additional Messaging, Calorie Display, Exercise Display. The pre-intervension period and follow-up period are treated as baseline reference observations. Variables that would be included in the LME model would be day of week, four intervention indicators and duration into the intervention, clustered by site. The model development process involves selection of fixed effect and random effect parameters, typically guided by statistical tests like the log-likelihood test. 
@@ -167,9 +157,6 @@ Linear mixed effect models are used with the following assumptions: error terms 
    
 
 ## 5. Conclusions
-   
-   - Recommendations to the clients.
-   
 
 The recommended statistical process for assessing the impact of strategies to promote zero-calorie beverages over their sugary alternatives involves both exploratory and formal analyses. An exploratory data analysis will help identify underlying patterns in the data, such as correlation and missingness. The formal analysis is recommended to include three models: interrupted time series analysis, generalized estimating equations, and the linear mixed-effects model. Each of these models is capable of handling time-series and longitudinal data. Results from these models can be tested and compared for security. These analyses will answer if the data may indicate an impact on beverage sales by various labeling and discount strategies. 
    
@@ -189,25 +176,27 @@ The recommended statistical process for assessing the impact of strategies to pr
 
 ### LME model
 
-Let $y_i$ be the vector of measurements of response for site $i$, then a Linear Mixed Effect model is written as
-$$y_i = X_i\beta + Z_i b_i + e_i$$
-where $\beta$ contains fixed effects, $b_i$ contains random effects parameter for site $i$. In this case, the expanded general parameters would be
-$$y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}$$
-where $y_{ij}$ is the sales of beverage at site $i$ day $j$, $ \beta_0 + b_{ij}^0$ is the fixed and random terms for intercept, $(\beta_1 + b_{ij}^1)Treatment$ consists of the fixed and random terms for all four indicator variable for treatment, $(\beta_2 + b_{ij}^2)Day of Week$ consists of the fixed and random terms for each day of the week, $(\beta_3 + b_{ij}^3)Duration$ represents the fixed and random effect of slope for duration into a specific treatment. 
+Let $y_i$ be the vector of measurements of response for site $i$, then a Linear Mixed Effect model is written as $$y_i = X_i\beta + Z_i b_i + e_i$$ where $\beta$ contains fixed effects, $b_i$ contains random effects parameter for site $i$. In this case, the expanded general parameters would be $$y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}$$ where $y_{ij}$ is the sales of beverage at site $i$ day $j$, $ \beta^0 + b_{ij}^0$ is the fixed and random terms for intercept, $(\beta_1 + b_{ij}^1)Treatment$ consists of the fixed and random terms for all four indicator variable for treatment, $(\beta_2 + b_{ij}^2)Day of Week$ consists of the fixed and random terms for each day of the week, $(\beta_3 + b_{ij}^3)Duration$ represents the fixed and random effect of slope for duration into a specific treatment.
+
 ### GEE Model
 
-Let ${\bf Y_i}$ be the outcome variable for beverage $i$ (zero-calorie or sugared) sales.  
+Let $\mathbf{Y_i}$ be the outcome variable for beverage $i$ (zero-calorie or sugared) sales.
 
-Let $g(\cdot)$ be the log link function (Poisson or Negative Binomial). Then, for design matrix ${\bf X}$ including all revenant predictors, the model can be written more explicitly as
+Let $g(\cdot)$ be the log link function (Poisson or Negative Binomial). Then, for design matrix $\mathbf{X}$ including all revenant predictors, the model can be written more explicitly as
 
-\begin{align*}
-g(\mathbb{E}[Y_i]) &= \beta_{0i} + \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging 1})  \\
-&\hspace{3mm} + \beta_{4i} (\text{Calorie Messaging 2}) + \beta_{5i} (\text{Calorie Messaging 3}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})\\
-&\hspace{3mm} + \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
-\end{align*}
+$$
+g(\mathbb{E}[Y_i]) = \beta_{0i} \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging}) 
+$$
 
+$$
++ \beta_{4i} (\text{Exercise Messaging}) + \beta_{5i} (\text{Both Calorie Messaging}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})
+$$
 
-Then $\beta_{0i}$ is the intercept. (Discount) and (Discount + Messaging) are each dummy variables to represent the discount intervention without messaging, and discount with messaging respectively. (Site B) and (Site C) are also dummy variables to indicate the site, with the baseline being site A.  
+$$
++ \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
+$$
+
+Then $\beta_{0i}$ is the intercept. (Discount) and (Discount + Messaging) are each dummy variables to represent the discount intervention without messaging, and discount with messaging respectively. (Site B) and (Site C) are also dummy variables to indicate the site, with the baseline being site A.
 
 
 ### ITSA Model
