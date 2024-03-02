@@ -1,5 +1,5 @@
 ---
-title: "Client Report Zero-calorie Drink Consumption Intervention"
+title: "Zero-calorie Drink Consumption Intervention Report"
 author: "Parham Pishrobat, Sarah Masri, Johnson Chen"
 date: "`r Sys.Date()`"
 output: 
@@ -38,7 +38,7 @@ source("../code/LMEM.R")
 ```
 
 
-
+\newpage
 
 ## 1. Introduction
 
@@ -82,9 +82,9 @@ boxplots_by_category(beverage_sales, responses = c("ZeroCal", "Sugary"), categor
 
 ### 3.2 Correlation Plot 
   
-The following plot investigates the correlation structure between the day of the week (`DofW`), the number of zero-calorie drinks sold (`ZeroCal`), and the number of sugary drinks sold (`Sugary`). In this plot, the size, color of the circles and number represent the strength of the correlation coefficients between the variables. The `ZeroCal` and `Sugary` variables exhibit a very strong positive correlation with a correlation coefficient of 0.97. This suggests that sales of zero-calorie and sugary drinks are closely related; when sales of one type increase, sales of the other type tend to increase in a similar fashion. Conversely, both `ZeroCal` and `Sugary` drinks show a negative correlation with `DofW`, as indicated by the coefficient of -0.39. This negative correlation suggests a tendency for the sales of both drink types to decrease on certain days of the week. Furthermore, there is strong positive correlation between `ZeroCal` and `Sugary` with `Total` variable, as expected when the total sales count increases, sales count of both `ZeroCal` and `Sugary` drinks tend to increase as well.
+The following plot investigates the correlation structure between the day of the week (`DofW`), the number of zero-calorie drinks sold (`ZeroCal`), and the number of sugary drinks sold (`Sugary`). In this plot, the size, color of the circles and number represent the strength of the correlation coefficients between the variables. The `ZeroCal` and `Sugary` variables exhibit a very strong positive correlation with a correlation coefficient of 0.97. This suggests that sales of zero-calorie and sugary drinks are closely related; when sales of one type increase, sales of the other type tend to increase in a similar fashion. Conversely, both `ZeroCal` and `Sugary` drinks show a negative correlation with `DofW`, as indicated by the coefficient of -0.39. This negative correlation suggests a tendency for the sales of both drink types to decrease on certain days of the week.
 
-```{r correlation, echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
+```{r correlation, echo=FALSE, fig.height=3, fig.width=3, fig.pos="H"}
 plot_corr_plot(beverage_sales)
 ```
 
@@ -115,7 +115,7 @@ Overall, three models are considered for formal analysis.
 # handle_missing_data(beverage_sales)$MissingOverview
 ```
 
-### 4.1 Iinterupted Times Series Analysis 
+### 4.1 Interupted Times Series Analysis 
 
 The study's design, an interrupted time series across multiple sites, naturally lends itself to Interrupted Time Series Analysis (ITSA). This method effectively handles the challenges posed by non-randomized designs, isolating intervention impacts from pre-existing trends.
 
@@ -145,8 +145,6 @@ Since the study aims to investigate the number of beverages sold at each site, t
 Linear Mixed Effects (LME) models are useful for analyzing data structured in clusters in a longitudinal study. Within a LME model, fixed effects are those that are consistent across all observations, such as the global influence of intervention and the day of week. These effects are assumed to be the baseline of impact across all sites. Random effects, on the other hand, account for differences between sites or temporal fluctuations within a site that are not captured by the fixed effects.
 
 In this dataset, the five intervention methods across sites could be transformed into four indicator variables, representing the presence and absence of Discount, Additional Messaging, Calorie Display, Exercise Display. The pre-intervension period and follow-up period are treated as baseline reference observations. Variables that would be included in the LME model would be day of week, four intervention indicators and duration into the intervention, clustered by site. The model development process involves selection of fixed effect and random effect parameters, typically guided by statistical tests like the log-likelihood test. 
-
-Linear mixed effect models are used with the following assumptions: error terms is required to be normally distributed with a consistent spread, and the relationship between covariates and response are linear. These assumptions can be verified with diagnostic plots such as scatterplots and Q-Q plots of the errors.  
 
 ```{r lmem,echo=FALSE}
 
