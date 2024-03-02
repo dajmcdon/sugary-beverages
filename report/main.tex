@@ -37,46 +37,6 @@
 \makeatother
 \usepackage{xcolor}
 \usepackage[margin=1in]{geometry}
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -123,8 +83,6 @@
 
 \begin{document}
 \maketitle
-
-\pagebreak
 
 \hypertarget{introduction}{%
 \subsection{1. Introduction}\label{introduction}}
@@ -186,31 +144,8 @@ statistical methods, uncovering underlying patterns and outliers in the
 data. It ensures the subsequent analysis is built on a solid foundation
 of understanding, thereby enhancing the reliability of the findings.
 
-\hypertarget{histogram-plots}{%
-\subsubsection{3.1 Histogram Plots}\label{histogram-plots}}
-
-The following histogram plots show the frequency distribution of sales
-for Sugary (in purple), Zero-Calorie (ZeroCal, in teal), and Total (in
-yellow) beverages. The x-axis of each histogram represents the sales
-volume, while the y-axis indicates the count of observations within each
-sales range. The pattern in all histograms is similar: most sales
-numbers cluster at the lower end of the scale, suggesting a higher
-frequency of days with fewer sales; however, the sales histograms
-exhibit a second weaker mode, indicating two common sales volumes across
-the observed period.
-
-\begin{figure}
-\centering
-\includegraphics{main_files/figure-latex/Plot-Histograms-1.pdf}
-\caption{Sales Distribution Analysis: Histograms displaying the
-frequency of sales for Sugary (purple), Zero-Calorie (teal), and Total
-combined (yellow) beverages. Each histogram reveals the distribution
-pattern of sales volumes, highlighting the bimodal nature of sales
-across all types.}
-\end{figure}
-
 \hypertarget{box-plots}{%
-\subsubsection{3.2 Box Plots}\label{box-plots}}
+\subsubsection{3.1 Box Plots}\label{box-plots}}
 
 The following boxplots represent the distribution of sugary and
 zero-calorie beverage sales across different intervention strategies.
@@ -225,62 +160,17 @@ washout period (wash), the discount only (dis), second washout (wash2),
 follow up (follow), calorie content poster (cal), the exercise required
 to burn the calorie content (excer), and combination of the two (both).
 
-\begin{verbatim}
-## Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
-## i Please use `all_of()` or `any_of()` instead.
-##   # Was:
-##   data %>% select(responses)
-## 
-##   # Now:
-##   data %>% select(all_of(responses))
-## 
-## See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.
-\end{verbatim}
-
 \begin{figure}
 \centering
 \includegraphics{main_files/figure-latex/Boxplots-1.pdf}
 \caption{The boxplots display the sales distribution of Sugary and
 Zero-Calorie beverages across various interventions. Each intervention
-is colour-coded and shows the range of sales data, with the central line
+is colour-coded and shows the range of sales data with the central line
 representing the median sales.}
 \end{figure}
 
-\hypertarget{scatter-plot}{%
-\subsubsection{3.3 Scatter Plot}\label{scatter-plot}}
-
-The following scatter plot depicts the relationship between zero-calorie
-and sugary beverage sales at three different hospital sites: A or chop
-(purple), B or HF (blue), and C or NS (yellow). The x-axis represents
-zero-calorie beverage sales, and the y-axis represents sugary beverage
-sales. A dashed line, suggesting the line of equality, indicates where
-the sales for both types would be equal. Points above the line indicate
-higher sugary beverage sales when compared to zero-calorie ones, and
-points below the line indicate the opposite. The clustering of points
-towards the upper right suggests that for higher sales volumes, sugary
-beverages tend to sell as much as or more than zero-calorie options,
-particularly in site A (chop). The plot reveals variability in the sales
-patterns across sites, with the HF site having a more direct correlation
-between ZeroCal and Sugary sales when compared to other sites.
-
-\begin{figure}
-\centering
-\includegraphics{main_files/figure-latex/Sales-Scatterplot-1.pdf}
-\caption{This scatter plot contrasts zero-calorie and sugary beverage
-sales, colour-coded by the site. Each point represents the paired sales
-data for a given day, with the site-specific colour coding (chop in
-purple, HF in blue, NS in yellow) illustrating the sales trend at each
-location. The dashed diagonal line marks the parity where the sales of
-both beverage types are equal. Deviations from this line highlight the
-predominance of one beverage type over the other in daily sales.}
-\end{figure}
-
-\hypertarget{correlation-plot-johnson}{%
-\subsubsection{correlation plot
-(Johnson)}\label{correlation-plot-johnson}}
+\hypertarget{correlation-plot}{%
+\subsubsection{3.2 Correlation Plot}\label{correlation-plot}}
 
 The following plot investigates the correlation structure between the
 day of the week (\texttt{DofW}), the number of zero-calorie drinks sold
@@ -296,10 +186,11 @@ the other type tend to increase in a similar fashion. Conversely, both
 with \texttt{DofW}, as indicated by the coefficient of -0.39. This
 negative correlation suggests a tendency for the sales of both drink
 types to decrease on certain days of the week.
+
 \includegraphics{main_files/figure-latex/correlation-1.pdf}
 
 \hypertarget{missing-values-and-data-imbalance}{%
-\subsubsection{Missing Values and Data
+\subsubsection{3.3 Missing Values and Data
 Imbalance}\label{missing-values-and-data-imbalance}}
 
 The data has some missing data. It is important to identify what kind of
@@ -312,19 +203,10 @@ the data appears to be balanced since imbalanced data can hinder model
 accuracy. Balance between sites appears to be reasonable, where some
 imbalance is present between interventions. Namely, the `follow',
 `wash', and `wash2' levels are imbalanced when compared to the other
-interventions.
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.75\linewidth]{main_files/figure-latex/data quality-1} 
-
-}
-
-\caption{This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention.}\label{fig:data quality}
-\end{figure}
+interventions (see figure in appendix).
 
 \hypertarget{time-series-plot}{%
-\subsubsection{3.6 Time Series Plot}\label{time-series-plot}}
+\subsubsection{3.4 Time Series Plot}\label{time-series-plot}}
 
 The following stacked line plot represents the sales time series of
 zero-calorie and sugary beverages across different sites. Each line
@@ -348,14 +230,12 @@ the interventions to allow for visual assessment of their impact on
 beverage sales trends.}
 \end{figure}
 
+For more visual exploration see appendix.
+
 \hypertarget{formal-analysis}{%
 \subsection{4. Formal Analysis}\label{formal-analysis}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# handle\_missing\_data(beverage\_sales)$MissingOverview}
-\end{Highlighting}
-\end{Shaded}
+Overall, three models are considered for formal analysis.
 
 \hypertarget{iinterupted-times-series-analysis}{%
 \subsubsection{4.1 Iinterupted Times Series
@@ -380,8 +260,9 @@ against singular strategies. Therefore, employing ITSA can address the
 study's core questions, demonstrating its suitability for unravelling
 the effects of multifaceted interventions on consumer behaviour.
 
-\hypertarget{gee-sarah}{%
-\subsubsection{GEE (Sarah)}\label{gee-sarah}}
+\hypertarget{generalized-estimating-equations}{%
+\subsubsection{4.2 Generalized Estimating
+Equations}\label{generalized-estimating-equations}}
 
 The Generalized Estimating Equations (GEE) approach is a convenient and
 relatively easy to interpret method to model longitudinal data. GEE is
@@ -416,8 +297,9 @@ coefficient to test intervention and site effects. A Bonferroni
 correction is needed to adjust for increased risk of Type I error when
 making multiple statistical tests.
 
-\hypertarget{lmem-johnson}{%
-\subsubsection{LMEM (Johnson)}\label{lmem-johnson}}
+\hypertarget{linear-mixed-effects-model}{%
+\subsubsection{4.3 Linear Mixed Effects
+Model}\label{linear-mixed-effects-model}}
 
 Linear Mixed Effects (LME) models are useful for analyzing data
 structured in clusters in a longitudinal study. Within a LME model,
@@ -447,12 +329,6 @@ scatterplots and Q-Q plots of the errors.
 \hypertarget{conclusions}{%
 \subsection{5. Conclusions}\label{conclusions}}
 
-\begin{itemize}
-\tightlist
-\item
-  Recommendations to the clients.
-\end{itemize}
-
 The recommended statistical process for assessing the impact of
 strategies to promote zero-calorie beverages over their sugary
 alternatives involves both exploratory and formal analyses. An
@@ -467,12 +343,6 @@ beverage sales by various labeling and discount strategies.
 
 \hypertarget{references}{%
 \subsection{6. References}\label{references}}
-
-\begin{itemize}
-\tightlist
-\item
-  Properly formatted citations.
-\end{itemize}
 
 Columbia University Mailman School of Public Health. (n.d.). Repeated
 Measures Analysis. Columbia University Mailman School of Public Health.
@@ -597,5 +467,71 @@ factors that may influence sales, such as seasonal effects or marketing
 campaigns. These covariates can be time-varying and should be included
 in the model if they are thought to confound the relationship between
 the interventions and sales.
+
+\hypertarget{histogram-plots}{%
+\subsubsection{Histogram Plots}\label{histogram-plots}}
+
+The following histogram plots show the frequency distribution of sales
+for Sugary (in purple), Zero-Calorie (ZeroCal, in teal), and Total (in
+yellow) beverages. The x-axis of each histogram represents the sales
+volume, while the y-axis indicates the count of observations within each
+sales range. The pattern in all histograms is similar: most sales
+numbers cluster at the lower end of the scale, suggesting a higher
+frequency of days with fewer sales; however, the sales histograms
+exhibit a second weaker mode, indicating two common sales volumes across
+the observed period.
+
+\begin{figure}
+\centering
+\includegraphics{main_files/figure-latex/Plot-Histograms-1.pdf}
+\caption{Sales Distribution Analysis: Histograms displaying the
+frequency of sales for Sugary (purple), Zero-Calorie (teal), and Total
+combined (yellow) beverages. Each histogram reveals the distribution
+pattern of sales volumes, highlighting the bimodal nature of sales
+across all types.}
+\end{figure}
+
+\hypertarget{scatter-plot}{%
+\subsubsection{Scatter Plot}\label{scatter-plot}}
+
+The following scatter plot depicts the relationship between zero-calorie
+and sugary beverage sales at three different hospital sites: A or chop
+(purple), B or HF (blue), and C or NS (yellow). The x-axis represents
+zero-calorie beverage sales, and the y-axis represents sugary beverage
+sales. A dashed line, suggesting the line of equality, indicates where
+the sales for both types would be equal. Points above the line indicate
+higher sugary beverage sales when compared to zero-calorie ones, and
+points below the line indicate the opposite. The clustering of points
+towards the upper right suggests that for higher sales volumes, sugary
+beverages tend to sell as much as or more than zero-calorie options,
+particularly in site A (chop). The plot reveals variability in the sales
+patterns across sites, with the HF site having a more direct correlation
+between ZeroCal and Sugary sales when compared to other sites.
+
+\begin{figure}
+\centering
+\includegraphics{main_files/figure-latex/Sales-Scatterplot-1.pdf}
+\caption{This scatter plot contrasts zero-calorie and sugary beverage
+sales, colour-coded by the site. Each point represents the paired sales
+data for a given day, with the site-specific colour coding (chop in
+purple, HF in blue, NS in yellow) illustrating the sales trend at each
+location. The dashed diagonal line marks the parity where the sales of
+both beverage types are equal. Deviations from this line highlight the
+predominance of one beverage type over the other in daily sales.}
+\end{figure}
+
+\hypertarget{missing-values}{%
+\subsubsection{Missing Values}\label{missing-values}}
+
+The following plot visualizes the missing values.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{main_files/figure-latex/data quality-1} 
+
+}
+
+\caption{This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention.}\label{fig:data quality}
+\end{figure}
 
 \end{document}
