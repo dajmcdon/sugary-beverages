@@ -37,6 +37,46 @@
 \makeatother
 \usepackage{xcolor}
 \usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -72,23 +112,17 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Client Report (Placeholder)},
+  pdftitle={Client Report Zero-calorie Drink Consumption Intervention},
   pdfauthor={Parham Pishrobat, Sarah Masri, Johnson Chen},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Client Report (Placeholder)}
+\title{Client Report Zero-calorie Drink Consumption Intervention}
 \author{Parham Pishrobat, Sarah Masri, Johnson Chen}
 \date{2024-03-01}
 
 \begin{document}
 \maketitle
-
-\textbf{Date:} \quad \  2024-03-01\\  
-\textbf{Consultants:} \\
-Parham Pishrobat\\
-Sarah Masri\\
-Johnson Chen\\  
 
 \pagebreak
 
@@ -206,8 +240,17 @@ to burn the calorie content (excer), and combination of the two (both).
 ## generated.
 \end{verbatim}
 
-\includegraphics{main_files/figure-latex/Boxplots-1.pdf} \#\#\# 3.3
-Scatter Plot
+\begin{figure}
+\centering
+\includegraphics{main_files/figure-latex/Boxplots-1.pdf}
+\caption{The boxplots display the sales distribution of Sugary and
+Zero-Calorie beverages across various interventions. Each intervention
+is colour-coded and shows the range of sales data, with the central line
+representing the median sales.}
+\end{figure}
+
+\hypertarget{scatter-plot}{%
+\subsubsection{3.3 Scatter Plot}\label{scatter-plot}}
 
 The following scatter plot depicts the relationship between zero-calorie
 and sugary beverage sales at three different hospital sites: A or chop
@@ -235,8 +278,9 @@ both beverage types are equal. Deviations from this line highlight the
 predominance of one beverage type over the other in daily sales.}
 \end{figure}
 
-\hypertarget{correlation-plot}{%
-\subsubsection{3.4 Correlation Plot}\label{correlation-plot}}
+\hypertarget{correlation-plot-johnson}{%
+\subsubsection{correlation plot
+(Johnson)}\label{correlation-plot-johnson}}
 
 The following plot investigates the correlation structure between the
 day of the week (\texttt{DofW}), the number of zero-calorie drinks sold
@@ -255,7 +299,7 @@ types to decrease on certain days of the week.
 \includegraphics{main_files/figure-latex/correlation-1.pdf}
 
 \hypertarget{missing-values-and-data-imbalance}{%
-\subsubsection{3.5 Missing Values and Data
+\subsubsection{Missing Values and Data
 Imbalance}\label{missing-values-and-data-imbalance}}
 
 The data has some missing data. It is important to identify what kind of
@@ -270,7 +314,14 @@ imbalance is present between interventions. Namely, the `follow',
 `wash', and `wash2' levels are imbalanced when compared to the other
 interventions.
 
-\begin{center}\includegraphics[width=0.75\linewidth]{main_files/figure-latex/data quality-1} \end{center}
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{main_files/figure-latex/data quality-1} 
+
+}
+
+\caption{This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention.}\label{fig:data quality}
+\end{figure}
 
 \hypertarget{time-series-plot}{%
 \subsubsection{3.6 Time Series Plot}\label{time-series-plot}}
@@ -300,6 +351,12 @@ beverage sales trends.}
 \hypertarget{formal-analysis}{%
 \subsection{4. Formal Analysis}\label{formal-analysis}}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# handle\_missing\_data(beverage\_sales)$MissingOverview}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{iinterupted-times-series-analysis}{%
 \subsubsection{4.1 Iinterupted Times Series
 Analysis}\label{iinterupted-times-series-analysis}}
@@ -323,9 +380,8 @@ against singular strategies. Therefore, employing ITSA can address the
 study's core questions, demonstrating its suitability for unravelling
 the effects of multifaceted interventions on consumer behaviour.
 
-\hypertarget{generalized-estimating-equations}{%
-\subsubsection{4.2 Generalized Estimating
-Equations}\label{generalized-estimating-equations}}
+\hypertarget{gee-sarah}{%
+\subsubsection{GEE (Sarah)}\label{gee-sarah}}
 
 The Generalized Estimating Equations (GEE) approach is a convenient and
 relatively easy to interpret method to model longitudinal data. GEE is
@@ -360,9 +416,8 @@ coefficient to test intervention and site effects. A Bonferroni
 correction is needed to adjust for increased risk of Type I error when
 making multiple statistical tests.
 
-\hypertarget{linear-mixed-effect-model}{%
-\subsubsection{4.3 Linear Mixed Effect
-Model}\label{linear-mixed-effect-model}}
+\hypertarget{lmem-johnson}{%
+\subsubsection{LMEM (Johnson)}\label{lmem-johnson}}
 
 Linear Mixed Effects (LME) models are useful for analyzing data
 structured in clusters in a longitudinal study. Within a LME model,
@@ -378,10 +433,10 @@ transformed into four indicator variables, representing the presence and
 absence of Discount, Additional Messaging, Calorie Display, Exercise
 Display. The pre-intervension period and follow-up period are treated as
 baseline reference observations. Variables that would be included in the
-LME model would be day of week, site, four intervention indicators and
-duration into the intervention. The model development process involves
-selection of fixed effect and random effect parameters, typically guided
-by statistical tests like the log-likelihood test.
+LME model would be day of week, four intervention indicators and
+duration into the intervention, clustered by site. The model development
+process involves selection of fixed effect and random effect parameters,
+typically guided by statistical tests like the log-likelihood test.
 
 Linear mixed effect models are used with the following assumptions:
 error terms is required to be normally distributed with a consistent
@@ -392,18 +447,23 @@ scatterplots and Q-Q plots of the errors.
 \hypertarget{conclusions}{%
 \subsection{5. Conclusions}\label{conclusions}}
 
-In conclusion, our analysis strongly recommends adopting Interrupted
-Time Series Analysis (ITSA) to assess the interventions' impacts on
-beverage sales. This method is particularly suited to the study's
-quasi-experimental design, enabling precise measurement of the
-interventions' immediate and longitudinal effects amidst inherent data
-complexities. The ITSA allows for a detailed examination of changes in
-sales patterns before, during, and after interventions but also
-accommodates the multi-site setup, providing a nuanced understanding of
-site-specific impacts. Through this approach, we can reliably decipher
-the effectiveness of visual calorie displays and pricing strategies in
-influencing consumer choices towards zero-calorie beverages, offering
-actionable insights for future health promotion strategies..
+\begin{itemize}
+\tightlist
+\item
+  Recommendations to the clients.
+\end{itemize}
+
+The recommended statistical process for assessing the impact of
+strategies to promote zero-calorie beverages over their sugary
+alternatives involves both exploratory and formal analyses. An
+exploratory data analysis will help identify underlying patterns in the
+data, such as correlation and missingness. The formal analysis is
+recommended to include three models: interrupted time series analysis,
+generalized estimating equations, and the linear mixed-effects model.
+Each of these models is capable of handling time-series and longitudinal
+data. Results from these models can be tested and compared for security.
+These analyses will answer if the data may indicate an impact on
+beverage sales by various labeling and discount strategies.
 
 \hypertarget{references}{%
 \subsection{6. References}\label{references}}
@@ -429,8 +489,23 @@ Measures Analysis. Columbia University Mailman School of Public Health.
   Additional tables/figures.
 \end{itemize}
 
-\hypertarget{gee-model}{%
-\subsubsection{GEE Model}\label{gee-model}}
+\hypertarget{lme-model}{%
+\subsubsection{LME model}\label{lme-model}}
+
+Let \(y_i\) be the vector of measurements of response for site \(i\),
+then a Linear Mixed Effect model is written as
+\[y_i = X_i\beta + Z_i b_i + e_i\] where \(\beta\) contains fixed
+effects, \(b_i\) contains random effects parameter for site \(i\). In
+this case, the expanded general parameters would be
+\[y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}\]
+where \(y_{ij}\) is the sales of beverage at site \(i\) day \(j\), \$
+\beta\emph{0 + b}\{ij\}\^{}0\$ is the fixed and random terms for
+intercept, \((\beta_1 + b_{ij}^1)Treatment\) consists of the fixed and
+random terms for all four indicator variable for treatment,
+\((\beta_2 + b_{ij}^2)Day of Week\) consists of the fixed and random
+terms for each day of the week, \((\beta_3 + b_{ij}^3)Duration\)
+represents the fixed and random effect of slope for duration into a
+specific treatment. \#\#\# GEE Model
 
 Let \({\bf Y_i}\) be the outcome variable for beverage \(i\)
 (zero-calorie or sugared) sales.
