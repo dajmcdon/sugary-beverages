@@ -15,8 +15,6 @@ header-includes:
   - \renewcommand{\headrulewidth}{2pt}
   - \renewcommand{\footrulewidth}{1pt}
   - \setmainfont{Times New Roman} 
-  - \usepackage{setspace} 
-  - \setstretch{1.5}
   - \usepackage{xcolor}
   - \usepackage{setspace}\singlespacing
 ---
@@ -160,13 +158,39 @@ The recommended statistical process for assessing the impact of strategies to pr
 
 ## 6. References
    
-   
-   Columbia University Mailman School of Public Health. (n.d.). Repeated Measures Analysis. Columbia University Mailman School of Public Health. https://www.publichealth.columbia.edu/research/population-health-methods/repeated-measures-analysis
+- [\underline{\textcolor{blue}{Interrupted Time Series Analysis}}](https://rpubs.com/mbounthavong/MEPS_tutorial_6_itsa)
+- [\underline{\textcolor{blue}{Getting Started with Generalized Estimating Equations}}](https://library.virginia.edu/data/articles/getting-started-with-generalized-estimating-equations#:~:text=Generalized%20estimating%20equations%2C%20or%20GEE,(i.e.%2C%20model%20coefficients).)
+- Linear Mixed Effect Model Tutorials:
+  + [\underline{\textcolor{blue}{LMEM tutorial (illinois.edu)}}](https://jontalle.web.engr.illinois.edu/MISC/lme4/bw_LME_tutorial.pdf)
+  + [\underline{\textcolor{blue}{Chapter 17: Mixed Effects Modeling (uic.edu)}}](https://ademos.people.uic.edu/Chapter17.html)
+  + [\underline{\textcolor{blue}{Introduction to Linear Mixed Models (ucla.edu)}}](https://stats.idre.ucla.edu/other/mult-pkg/introduction-to-linear-mixed-models/)
+  + [\underline{\textcolor{blue}{Mixed Effects Models (bodywinter.com)}}](https://bodo-winter.net/tutorial/bw_LME_tutorial1.pdf)
+  + [\underline{\textcolor{blue}{Mixed Effects, lme4 Tutorial}}](https://ourcodingclub.github.io/tutorials/mixed-models/)
+  + [\underline{\textcolor{blue}{Fitting Linear Mixed-Effects Models Using lme4}}](https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf)
+
+- ASDA Teaching Recordings:
+  + [\underline{\textcolor{blue}{Exploratory Data Analysis}}](https://community.grad.ubc.ca/gps/event/22318)
+  + [\underline{\textcolor{blue}{Study Design and Data Collection Essentials}}](https://community.grad.ubc.ca/gps/event/22327)
+  + [\underline{\textcolor{blue}{Mixed Effects Models}}](https://community.grad.ubc.ca/gps/event/22330)
+- Multiple Testing Correction Techniques:
+  + [\underline{\textcolor{blue}{Multiple Testing Correction Techniques}}](https://www.stat.berkeley.edu/~mgoldman/Section0402.pdf)
+  + [\underline{\textcolor{blue}{An Article on the Multiple Testing Problem}}](https://egap.org/resource/10-things-to-know-about-multiple-comparisons/)
+- Model Assumptions and Interpretations:
+  + [\underline{\textcolor{blue}{Linear Mixed Effects Model Assumptions}}](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13434)
+  + [\underline{\textcolor{blue}{DHARMa: a Residual Diagnostics Tool for LMEM}}](https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html)
+  + [\underline{\textcolor{blue}{Interactions Explained}}](www.medicine.mcgill.ca/epidemiology/Joseph/courses/EPIB-621/interaction.pdf) 
+  + [\underline{\textcolor{blue}{Understanding Interactions between Categorical and Continuous Variables}}](https://www.theanalysisfactor.com/interactions-categorical-and-continuous-variables/)
+  + [\underline{\textcolor{blue}{Interaction Plots}}](https://ademos.people.uic.edu/Chapter13.html)
+  + [\underline{\textcolor{blue}{Interaction Plots}}](https://rpubs.com/tf_peterson/interactionplotDemo)
+  + [\underline{\textcolor{blue}{Testing for Interaction Significance}}](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)
+  + [\underline{\textcolor{blue}{Package `emmeans` for Post-hoc Analysis and Pairwise Comparisons of the Interaction Effect}}](https://cran.r-project.org/web/packages/emmeans/vignettes/interactions.html)
+  + [\underline{\textcolor{blue}{Interaction Analysis in R}}](https://stats.oarc.ucla.edu/r/seminars/interactions-r/)
+  + [\underline{\textcolor{blue}{Comparisons and Contrasts in emmeans}}](https://cran.r-project.org/web/packages/emmeans/vignettes/comparisons.html)  
+
 
 ## 7. Statistical Appendix
    
-   - Mathematical formulas.
-   - Additional tables/figures.
+The following sub section contain some additional information and analysis results.
 
 ### LME model
 

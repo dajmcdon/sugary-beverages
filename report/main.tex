@@ -62,8 +62,6 @@
 \renewcommand{\headrulewidth}{2pt}
 \renewcommand{\footrulewidth}{1pt}
 \setmainfont{Times New Roman}
-\usepackage{setspace}
-\setstretch{1.5}
 \usepackage{xcolor}
 \usepackage{setspace}\singlespacing
 \ifLuaTeX
@@ -73,12 +71,12 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Client Report Zero-calorie Drink Consumption Intervention},
+  pdftitle={Zero-calorie Drink Consumption Intervention Report},
   pdfauthor={Parham Pishrobat, Sarah Masri, Johnson Chen},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Client Report Zero-calorie Drink Consumption Intervention}
+\title{Zero-calorie Drink Consumption Intervention Report}
 \author{Parham Pishrobat, Sarah Masri, Johnson Chen}
 \date{2024-03-01}
 
@@ -238,9 +236,9 @@ For more visual exploration see appendix.
 
 Overall, three models are considered for formal analysis.
 
-\hypertarget{iinterupted-times-series-analysis}{%
-\subsubsection{4.1 Iinterupted Times Series
-Analysis}\label{iinterupted-times-series-analysis}}
+\hypertarget{interupted-times-series-analysis}{%
+\subsubsection{4.1 Interupted Times Series
+Analysis}\label{interupted-times-series-analysis}}
 
 The study's design, an interrupted time series across multiple sites,
 naturally lends itself to Interrupted Time Series Analysis (ITSA). This
@@ -321,12 +319,6 @@ duration into the intervention, clustered by site. The model development
 process involves selection of fixed effect and random effect parameters,
 typically guided by statistical tests like the log-likelihood test.
 
-Linear mixed effect models are used with the following assumptions:
-error terms is required to be normally distributed with a consistent
-spread, and the relationship between covariates and response are linear.
-These assumptions can be verified with diagnostic plots such as
-scatterplots and Q-Q plots of the errors.
-
 \hypertarget{conclusions}{%
 \subsection{5. Conclusions}\label{conclusions}}
 
@@ -345,20 +337,85 @@ beverage sales by various labeling and discount strategies.
 \hypertarget{references}{%
 \subsection{6. References}\label{references}}
 
-Columbia University Mailman School of Public Health. (n.d.). Repeated
-Measures Analysis. Columbia University Mailman School of Public Health.
-\url{https://www.publichealth.columbia.edu/research/population-health-methods/repeated-measures-analysis}
+\begin{itemize}
+\tightlist
+\item
+  \href{https://rpubs.com/mbounthavong/MEPS_tutorial_6_itsa}{\underline{\textcolor{blue}{Interrupted Time Series Analysis}}}
+\item
+  \href{https://library.virginia.edu/data/articles/getting-started-with-generalized-estimating-equations\#:~:text=Generalized\%20estimating\%20equations\%2C\%20or\%20GEE,(i.e.\%2C\%20model\%20coefficients).}{\underline{\textcolor{blue}{Getting Started with Generalized Estimating Equations}}}
+\item
+  Linear Mixed Effect Model Tutorials:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \href{https://jontalle.web.engr.illinois.edu/MISC/lme4/bw_LME_tutorial.pdf}{\underline{\textcolor{blue}{LMEM tutorial (illinois.edu)}}}
+  \item
+    \href{https://ademos.people.uic.edu/Chapter17.html}{\underline{\textcolor{blue}{Chapter 17: Mixed Effects Modeling (uic.edu)}}}
+  \item
+    \href{https://stats.idre.ucla.edu/other/mult-pkg/introduction-to-linear-mixed-models/}{\underline{\textcolor{blue}{Introduction to Linear Mixed Models (ucla.edu)}}}
+  \item
+    \href{https://bodo-winter.net/tutorial/bw_LME_tutorial1.pdf}{\underline{\textcolor{blue}{Mixed Effects Models (bodywinter.com)}}}
+  \item
+    \href{https://ourcodingclub.github.io/tutorials/mixed-models/}{\underline{\textcolor{blue}{Mixed Effects, lme4 Tutorial}}}
+  \item
+    \href{https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf}{\underline{\textcolor{blue}{Fitting Linear Mixed-Effects Models Using lme4}}}
+  \end{itemize}
+\item
+  ASDA Teaching Recordings:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \href{https://community.grad.ubc.ca/gps/event/22318}{\underline{\textcolor{blue}{Exploratory Data Analysis}}}
+  \item
+    \href{https://community.grad.ubc.ca/gps/event/22327}{\underline{\textcolor{blue}{Study Design and Data Collection Essentials}}}
+  \item
+    \href{https://community.grad.ubc.ca/gps/event/22330}{\underline{\textcolor{blue}{Mixed Effects Models}}}
+  \end{itemize}
+\item
+  Multiple Testing Correction Techniques:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \href{https://www.stat.berkeley.edu/~mgoldman/Section0402.pdf}{\underline{\textcolor{blue}{Multiple Testing Correction Techniques}}}
+  \item
+    \href{https://egap.org/resource/10-things-to-know-about-multiple-comparisons/}{\underline{\textcolor{blue}{An Article on the Multiple Testing Problem}}}
+  \end{itemize}
+\item
+  Model Assumptions and Interpretations:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \href{https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13434}{\underline{\textcolor{blue}{Linear Mixed Effects Model Assumptions}}}
+  \item
+    \href{https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html}{\underline{\textcolor{blue}{DHARMa: a Residual Diagnostics Tool for LMEM}}}
+  \item
+    \href{www.medicine.mcgill.ca/epidemiology/Joseph/courses/EPIB-621/interaction.pdf}{\underline{\textcolor{blue}{Interactions Explained}}}
+  \item
+    \href{https://www.theanalysisfactor.com/interactions-categorical-and-continuous-variables/}{\underline{\textcolor{blue}{Understanding Interactions between Categorical and Continuous Variables}}}
+  \item
+    \href{https://ademos.people.uic.edu/Chapter13.html}{\underline{\textcolor{blue}{Interaction Plots}}}
+  \item
+    \href{https://rpubs.com/tf_peterson/interactionplotDemo}{\underline{\textcolor{blue}{Interaction Plots}}}
+  \item
+    \href{https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/}{\underline{\textcolor{blue}{Testing for Interaction Significance}}}
+  \item
+    \href{https://cran.r-project.org/web/packages/emmeans/vignettes/interactions.html}{\underline{\textcolor{blue}{Package `emmeans` for Post-hoc Analysis and Pairwise Comparisons of the Interaction Effect}}}
+  \item
+    \href{https://stats.oarc.ucla.edu/r/seminars/interactions-r/}{\underline{\textcolor{blue}{Interaction Analysis in R}}}
+  \item
+    \href{https://cran.r-project.org/web/packages/emmeans/vignettes/comparisons.html}{\underline{\textcolor{blue}{Comparisons and Contrasts in emmeans}}}
+  \end{itemize}
+\end{itemize}
 
 \hypertarget{statistical-appendix}{%
 \subsection{7. Statistical Appendix}\label{statistical-appendix}}
 
-\begin{itemize}
-\tightlist
-\item
-  Mathematical formulas.
-\item
-  Additional tables/figures.
-\end{itemize}
+The following sub section contain some additional information and
+analysis results.
 
 \hypertarget{lme-model}{%
 \subsubsection{LME model}\label{lme-model}}
