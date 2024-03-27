@@ -6,16 +6,14 @@ output:
       latex_engine: xelatex
       keep_tex: true
 header-includes:
-  - \usepackage{fancyhdr}
-  - \pagestyle{fancy}
-  - \fancyhead[L]{STAT 550}
-  - \fancyhead[R]{Consultation Report}
-  - \fancyfoot[C]{\thepage}
-  - \renewcommand{\headrulewidth}{2pt}
-  - \renewcommand{\footrulewidth}{1pt}
-  - \setmainfont{Times New Roman} 
+  - \usepackage{fontspec}
+  - \usepackage{caption}
+  - \captionsetup{font={small, it}, labelfont=bf}
+  - \setmainfont{Times New Roman}
+  - \fontsize{12pt}{15pt}\selectfont 
   - \usepackage{xcolor}
-  - \usepackage{setspace}\singlespacing
+  - \usepackage{setspace}
+  - \setstretch{1.2}
 ---
 
 
@@ -55,7 +53,7 @@ Concerns around sugar consumption and its health implications have prompted many
 
 The study adopts an interrupted time-series multi-site quasi-experimental design to assess the effectiveness of the five  interventions on the purchase patterns of bottled sugary and zero-calorie beverages. The data are recorded from cafeterias and convenience shops at three hospital sites, denoted by A, B, and C. Hospital A is urban and has two cafeterias and two convenience shops. Hospital B is also an urban setting but it has only one cafeteria. Hospital C is a suburban setting, having one cafeteria and one convenience shop. Both interventions and data collection were automatic at site A and by trained personnel in sites B and C. Sugary beverages include regular soft drinks and iced teas, sweetened with natural sugars like sucrose and corn syrup, and zero-calorie beverages include diet soft drinks and teas, and water. Other beverages, such as juice and milk, are excluded from the study due to challenges in identifying their sugar contents. Nevertheless, the total sales information is kept in the study to represent the overall patterns of beverage sales irrespective of their sugar content.
 
-The experiment, starting on October 27, 2009 and ending 30 weeks later, measure daily sales of bottled sugary and zero-calorie beverages. The study period included a baseline data collection phase, intervention phases to elicit behaviour change, and washout periods to assess the persistence of intervention effects. The dataset contains 631 sales counts for zero-calorie, sugary, and all drinks, sale location, day of the week, and the type of intervention applied. The recorded variables consist of sales count, day of the week, site location, type of intervention, and beverage category (zero-calorie and sugary options). The price interventions consist of two periods of 10% discount on zero-calorie beverages, with one phase providing additional explanatory messaging about the discount. The calorie messaging interventions provided information on the caloric content of sugary drinks, the physical activity required to burn off these calories, and a combination of both strategies.
+The experiment, starting on October 27, 2009 and ending 32 weeks later, measure daily sales of bottled sugary and zero-calorie beverages. The study period included a baseline data collection phase, intervention phases to elicit behaviour change, and washout periods to assess the persistence of intervention effects. The dataset contains 631 sales counts for zero-calorie, sugary, and all drinks, sale location, day of the week, and the type of intervention applied. The recorded variables consist of sales count, day of the week, site location, type of intervention, and beverage category (zero-calorie and sugary options). The price interventions consist of two periods of 10% discount on zero-calorie beverages, with one phase providing additional explanatory messaging about the discount. The calorie messaging interventions provided information on the caloric content of sugary drinks, the physical activity required to burn off these calories, and a combination of both strategies.
 
 The day of week, site and intervention covariates are each considered categorical data types. Other observations are classified under numerical data types as they measure sales counts. Missing data is observed over some control periods of the study.  
 
@@ -86,9 +84,8 @@ Exploratory Data Analysis (EDA) is an important first step in data analysis, an 
 
 The following boxplots shows the distribution of sugary and zero-calorie beverage sales across different intervention strategies. Each boxplot captures the sales data variability with the central line denoting the median, the edges of the box indicating the interquartile range (IQR), and the whiskers extending to the furthest points that are not considered outliers. Outliers are individual points beyond the whiskers. Note that due to the bimodality of sales, the boxplot incorrectly indicates many outliers. The interventions, labelled on the x-axis, include baseline (preint), discount & messaging (dismes), washout period (wash), the discount only (dis), second washout (wash2), follow up (follow), calorie content poster (cal), the exercise required to burn the calorie content (excer), and combination of the two (both). 
 
-```{r Boxplots, fig.cap="The boxplots display the sales distribution of Sugary and Zero-Calorie beverages across various interventions. Each intervention is colour-coded and shows the range of sales data with the central line representing the median sales.", echo=FALSE, fig.height=5, fig.width=8, fig.pos="H"}
-boxplots_by_category(beverage_sales, responses = c("ZeroCal", "Sugary"), category = "Intervention") + 
-  theme(text = element_text(family = "Times New Roman"))
+```{r Boxplots, fig.cap="The boxplots display the sales distribution of Sugary and Zero-Calorie beverages across various interventions. Each intervention is colour-coded and shows the range of sales data with the central line representing the median sales.", echo=FALSE, fig.height=5, fig.width=8, fig.pos="p"}
+boxplots_by_category(beverage_sales, responses = c("ZeroCal", "Sugary"), category = "Intervention")
 ```
 
 
