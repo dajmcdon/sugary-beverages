@@ -1,5 +1,5 @@
 ---
-title: "Effect of Interventions on Tampering Sugary Beverages"
+title: "Statistical Advice on the Effect of Interventions on Beverage Sales"
 date: "`r Sys.Date()`"
 output: 
    pdf_document:
@@ -49,14 +49,17 @@ source("../code/LMEM.R")
 
 ## 1. Introduction
 
-Concerns around sugar consumption and its health implications have prompted many interventions to shift consumer behaviour away from sugary beverages. The current study investigates the effectiveness of various strategies to encourage consumers to choose zero-calorie beverages over sugary alternatives. In particular, the research question focuses on the impact of two strategies to inform consumers about calorie content through visual presentations: posters highlighting either the calorie content or the physical activity required to burn calories. Furthermore, the effectiveness of price discounts on behaviour is explored, both independently and in conjunction with explanatory messaging. This study also seek to understand if the effectiveness of those strategies varies across different sites.
+Concerns around sugar consumption and its health implications have prompted many interventions to change consumer behaviour cut down on sugary beverages. The current study investigates the effectiveness of two types of intervention strategies to motivate and incentivize consumers to choose zero-calorie beverages over sugary alternatives. In particular, the research question focuses on the impact of two strategies to inform consumers about calorie content through visual presentations: posters highlighting either the calorie content or the physical activity required to burn calories. Furthermore, the effectiveness of price discounts on behaviour is explored, both independently and in conjunction with explanatory messaging. This study also seek to understand if the effectiveness of those strategies varies across different sites.
 
 ## 2. Data Description and Summaries
 
+The study adopts an interrupted time-series multi-site quasi-experimental design to assess the effectiveness of the five  interventions on the purchase patterns of bottled sugary and zero-calorie beverages. The data are recorded from cafeterias and convenience shops at three hospital sites, denoted by A, B, and C. Hospital A is urban and has two cafeterias and two convenience shops. Hospital B is also an urban setting but it has only one cafeteria. Hospital C is a suburban setting, having one cafeteria and one convenience shop. Both interventions and data collection were automatic at site A and by trained personnel in sites B and C. Sugary beverages include regular soft drinks and iced teas, sweetened with natural sugars like sucrose and corn syrup, and zero-calorie beverages include diet soft drinks and teas, and water. Other beverages, such as juice and milk, are excluded from the study due to challenges in identifying their sugar contents. Nevertheless, the total sales information is kept in the study to represent the overall patterns of beverage sales irrespective of their sugar content.
 
-The primary outcome of interest is daily sales of bottled sugary and zero-calorie beverages, starting October 27th for 30 weeks. The dataset contains 631 sales counts for zero-calorie, sugary, and all drinks, sale location, day of the week, and the type of intervention applied. The study period includes a baseline data collection phase, intervention phases to elicit behaviour change, and washout periods to assess the persistence of intervention effects. The recorded variables consist of sales count, day of the week, site location, type of intervention, and beverage category (zero-calorie and sugary options). The price interventions consist of two periods of 10% discount on zero-calorie beverages, with one phase providing additional explanatory messaging about the discount. The calorie messaging interventions provided information on the caloric content of sugary drinks, the physical activity required to burn off these calories, and a combination of both strategies.
+The experiment, starting on October 27, 2009 and ending 30 weeks later, measure daily sales of bottled sugary and zero-calorie beverages. The study period included a baseline data collection phase, intervention phases to elicit behaviour change, and washout periods to assess the persistence of intervention effects. The dataset contains 631 sales counts for zero-calorie, sugary, and all drinks, sale location, day of the week, and the type of intervention applied. The recorded variables consist of sales count, day of the week, site location, type of intervention, and beverage category (zero-calorie and sugary options). The price interventions consist of two periods of 10% discount on zero-calorie beverages, with one phase providing additional explanatory messaging about the discount. The calorie messaging interventions provided information on the caloric content of sugary drinks, the physical activity required to burn off these calories, and a combination of both strategies.
 
-The study adopts an interrupted time-series multi-site quasi-experimental design to assess the outcomes of the five distinct interventions on the purchase patterns of bottled sugary and zero-calorie beverages. The data is recorded from cafeterias and convenience shops within three hospital sites, denoted by A, B, and C. Hospital A is urban and has two cafeterias and two convenience shops. Hospital B is also an urban setting but has only one cafeteria. Finally, hospital C is a suburban setting, having one cafeteria and one convenience shop. Both interventions and data collection were automatic at site A and by trained personnel in sites B and C. Sugary beverages include regular soft drinks and iced teas, sweetened with natural sugars like sucrose and corn syrup, and zero-calorie beverages include diet soft drinks and teas, and water. Other beverages, such as juice and milk, are excluded from the study due to challenges in identifying their sugar contents. Nevertheless, the total sales information is kept in the study to represent the overall patterns of beverage sales irrespective of their sugar content.
+The day of week, site and intervention covariates are each considered categorical data types. Other observations are classified under numerical data types as they measure sales counts. Missing data is observed over some control periods of the study.  
+
+
 
 
 
@@ -73,15 +76,15 @@ beverage_sales <- read.csv("../rawdata/june1data.csv") %>%
 # unique(beverage_sales$Intervention)
 ```
 
-## 3. Exploratory Analysis
+## 3. Exploratory Data Analysis
 
-In the Exploratory Data Analysis (EDA), this report would use 
-is an essential precursor to formal statistical methods, uncovering underlying patterns and outliers in the data. It ensures the subsequent analysis is built on a solid foundation of understanding, thereby enhancing the reliability of the findings.
+
+Exploratory Data Analysis (EDA) is an important first step in data analysis, an essential precursor to formal statistical methods, uncovering underlying patterns and outliers in the data. It ensures the subsequent analysis is built on a solid understanding of the data, thereby enhancing the reliability of the findings. To explore the data of the study, the following visualizations are suggested: box plots, a correlation plot, and time series plots. It is also recommended to observe the frequency of missing values in the dataset. 
 
 
 ### 3.1 BoxPlots
 
-The following boxplots represent the distribution of sugary and zero-calorie beverage sales across different intervention strategies. Each boxplot captures the sales data variability with the central line denoting the median, the edges of the box indicating the interquartile range (IQR), and the whiskers extending to the furthest points that are not considered outliers. Outliers are individual points beyond the whiskers. Note that due to the bimodality of sales, the boxplot incorrectly indicates many outliers. The interventions, labelled on the x-axis, include baseline (preint), discount & messaging (dismes), washout period (wash), the discount only (dis), second washout (wash2), follow up (follow), calorie content poster (cal), the exercise required to burn the calorie content (excer), and combination of the two (both). 
+The following boxplots shows the distribution of sugary and zero-calorie beverage sales across different intervention strategies. Each boxplot captures the sales data variability with the central line denoting the median, the edges of the box indicating the interquartile range (IQR), and the whiskers extending to the furthest points that are not considered outliers. Outliers are individual points beyond the whiskers. Note that due to the bimodality of sales, the boxplot incorrectly indicates many outliers. The interventions, labelled on the x-axis, include baseline (preint), discount & messaging (dismes), washout period (wash), the discount only (dis), second washout (wash2), follow up (follow), calorie content poster (cal), the exercise required to burn the calorie content (excer), and combination of the two (both). 
 
 ```{r Boxplots, fig.cap="The boxplots display the sales distribution of Sugary and Zero-Calorie beverages across various interventions. Each intervention is colour-coded and shows the range of sales data with the central line representing the median sales.", echo=FALSE, fig.height=5, fig.width=8, fig.pos="H"}
 boxplots_by_category(beverage_sales, responses = c("ZeroCal", "Sugary"), category = "Intervention") + 
@@ -98,14 +101,7 @@ plot_corr_plot(beverage_sales)
 ```
 
 
-
-### 3.3 Missing Values and Data Imbalance
-
-The data has some missing data. It is important to identify what kind of missing data exists within a dataset to better understand how to handle missingness during formal analysis. It appears that the missing data qualifies as missing not at random (MNAR), meaning that the probability of any given observation being missing varies for unidentified reasons. It is also important to note from the observations counts whether or not the data appears to be balanced since imbalanced data can hinder model accuracy. Balance between sites appears to be reasonable, where some imbalance is present between interventions. Namely, the 'follow', 'wash', and 'wash2' levels are imbalanced when compared to the other interventions (see figure in appendix).
-
-
-
-### 3.4 Time Series Plot 
+### 3.3 Time Series Plot 
 
 The following stacked line plot represents the sales time series of zero-calorie and sugary beverages across different sites. Each line represents the sales trajectory of one beverage type—green for zero-calorie and blue for sugary drinks. The x-axis represents time (in days), and the y-axis represents the sales volume. Dashed vertical lines indicate the start of different interventions, labelled as dismes (discount & messaging), dis (only discount), cal (calorie content poster), exer (exercise-based posters), and both. The interventions appear to influence sales, as suggested by changes in the lines' trajectories post-intervention. The plots are faceted by site, allowing for a comparative view of sales patterns across different locations.
 
@@ -114,23 +110,28 @@ plot_sales_time_series(beverage_sales)
 ```
 
 
-For more visual exploration see appendix.
+### 3.3 Missing Values and Data Imbalance
+
+The dataset has some missing data. It is important to identify what kind of missing data exists within a dataset to better understand how to handle missingness during formal analysis. Failing to address missing data may lead to a reduction of statistical power and biased results. It appears that the missing data are missing not at random (MNAR), meaning that the probability of any given observation being missing varies for unidentified reasons (e.g., hospital closures, public events). It is also important to note from the observations counts whether or not the data appear to be balanced since imbalanced data can hinder model accuracy. Balance between sites appears to be reasonable, where some imbalance is present between interventions. Namely, the 'follow', 'wash', and 'wash2' levels are imbalanced when compared to the other interventions (see figure in appendix).
+
+
+For more visual exploration see the appendix.
 
 ## 4. Formal Analysis
 
-Overall, three models are considered for formal analysis.
+Informed by the exploratory analysis above, three models are suggested for the formal analysis: interrupted times series, generalized estimating equations, and a linear mixed effects model. 
 
 ```{r Handle Missing Data, echo=FALSE, message=FALSE, warning=FALSE}
 # handle_missing_data(beverage_sales)$MissingOverview
 ```
 
-### 4.1 Interupted Times Series Analysis 
+### 4.1 Interrupted Times Series Analysis 
 
 The study's design, an interrupted time series across multiple sites, naturally lends itself to Interrupted Time Series Analysis (ITSA). This method effectively handles the challenges posed by non-randomized designs, isolating intervention impacts from pre-existing trends.
 
-The ITSA can characterize the immediate and ongoing effects of visual calorie content displays and price discounts on beverage selection. It segments the data across different intervention phases to quantify changes in zero-calorie and sugary beverage sales, offering a detailed view of each strategy's effectiveness over time.
+The ITSA method can characterize the immediate and ongoing effects of visual calorie content displays and price discounts on beverage selection. It segments the data across different intervention phases to quantify changes in zero-calorie and sugary beverage sales, offering a detailed view of each strategy's effectiveness over time.
 
-Moreover, ITSA's adaptability enables the analysis of variations in intervention effects across sites, enabling site-specific nuances. This approach reveals whether an intervention's success is uniform or site-dependent but also compares the impact of combined interventions against singular strategies. Therefore, employing ITSA can address the study's core questions, demonstrating its suitability for unravelling the effects of multifaceted interventions on consumer behaviour.
+Moreover, ITSA's adaptability enables the analysis of variations in intervention effects across sites, enabling site-specific nuances. This approach reveals whether an intervention's success is uniform or site-dependent by comparing the impact of combined interventions with that of singular strategies. Therefore, employing ITSA can address the study's core questions, demonstrating its suitability for unravelling the effects of multifaceted interventions on consumer behaviour.
 
 ```{r itsa, echo=FALSE}
 
@@ -140,9 +141,9 @@ Moreover, ITSA's adaptability enables the analysis of variations in intervention
 
 ### 4.2 Generalized Estimating Equations
 
-The Generalized Estimating Equations (GEE) approach is a convenient and relatively easy to interpret method to model longitudinal data. GEE is suitable for analyzing the data from this study since daily sales of bottled sugared beverages and zero-calorie beverages were measured repeatedly over time. GEE can be thought of as an extension of the Generalized Linear Model to longitudinal data (Columbia University). This method is particularly convenient due to its high statistical power, built-in handling of missing at random data, and its ability to account for within-subject correlation in non-normal data. 
+The Generalized Estimating Equations (GEE) approach is a convenient and relatively easy to interpret method to model longitudinal data. GEE is suitable for analyzing the data of from this study since daily sales of bottled sugared beverages and zero-calorie beverages are measured repeatedly over time. GEE can be thought of as an extension of the Generalized Linear Model to longitudinal data (Columbia University). This method is particularly convenient due to its high statistical power, built-in handling of missing at random data, and its ability to account for within-subject correlation in non-normal data. 
 
-Since the study aims to investigate the number of beverages sold at each site, this method assumes an outcome of zero-calorie and sugary beverages sold. Predictors include intervention type, site, day of the week, and total beverage sales. Site, day of the week, and total beverage sales predictors allow the model to adjust for any extraneous effects and possible sale or time trends independent of the studies interventions. Wash periods are excluded from the model and total sales are used as a control instead. Since this method models count data, a log link function is most appropriate, such as the Poisson or Negative Binomial. Models may be fitted over all sites simultaneously, or as one model per site. In the latter case, the sit factor may be excluded from the model. It is appropriate to try both to examine comparable results. Once the models are fitted, the GEE method will return coefficients for every intervention or combination of interventions taken during the study. These can be interpreted to help answer the studies main objectives. Namely, to examine how each intervention affected zero-calorie and sugary beverage sales, how sales differed by site, and comparing the impacts between different interventions on zero-calorie and sugary beverages sales. Hypothesis tests can be performed on each coefficient to test intervention and site effects. A Bonferroni correction is needed to adjust for increased risk of Type I error when making multiple statistical tests. 
+Since the study aims to investigate the amount of beverages sold at each site, this method assumes an outcome of zero-calorie and sugary beverages sold. Predictors include intervention type, site, day of the week, and total beverage sales. Site, day of the week, and total beverage sales predictors allow the model to adjust for any extraneous effects and possible sale or time trends independent of the studies interventions. Wash periods are excluded from the model and total sales are used as a control instead. Since this method models count data, a log link function is most appropriate, such as the Poisson or Negative Binomial. Models may be fitted over all sites simultaneously, or as one model per site. In the latter case, the sit factor may be excluded from the model. It is appropriate to try both to examine comparable results. Once the models are fitted, the GEE method will return coefficients for every intervention or combination of interventions taken during the study. These can be interpreted to help answer the studies main objectives. Namely, to examine how each intervention affects zero-calorie and sugary beverage sales, how sales differed by site, and comparing the impacts between different interventions on zero-calorie and sugary beverages sales. Hypothesis tests can be performed on each coefficient to test intervention and site effects. A Bonferroni correction is needed to adjust for increased risk of Type I error when making multiple statistical tests. 
 
 ```{r gee, echo=FALSE}
 
@@ -151,9 +152,9 @@ Since the study aims to investigate the number of beverages sold at each site, t
 ### 4.3 Linear Mixed Effects Model
 
 
-Linear Mixed Effects (LME) models are useful for analyzing data structured in clusters in a longitudinal study. Within a LME model, fixed effects are those that are consistent across all observations, such as the global influence of intervention and the day of week. These effects are assumed to be the baseline of impact across all sites. Random effects, on the other hand, account for differences between sites or temporal fluctuations within a site that are not captured by the fixed effects.
+Linear Mixed Effects (LME) models are useful for analyzing data structured in clusters in a longitudinal study. Within an LME model, fixed effects are those that are consistent across all observations, such as the global influence of intervention and the day of week. These effects are assumed to be the baseline of impact across all sites. Random effects, on the other hand, account for differences between sites or temporal fluctuations within a site that are not captured by the fixed effects.
 
-In this dataset, the five intervention methods across sites could be transformed into four indicator variables, representing the presence and absence of Discount, Additional Messaging, Calorie Display, Exercise Display. The pre-intervension period and follow-up period are treated as baseline reference observations. Variables that would be included in the LME model would be day of week, four intervention indicators and duration into the intervention, clustered by site. The model development process involves selection of fixed effect and random effect parameters, typically guided by statistical tests like the log-likelihood test. 
+In this dataset, the five intervention methods across sites could be transformed into four indicator variables, representing the presence and absence of Discount, Additional Messaging, Calorie Display, and Exercise Display. The pre-intervension period and follow-up period are treated as baseline reference observations. Variables that would be included in the LME model would be day of week, four intervention indicators and duration into the intervention, clustered by site. The model development process involves selection of fixed effect and random effect parameters, typically guided by statistical tests like the log-likelihood test. 
 
 ```{r lmem,echo=FALSE}
 
@@ -162,7 +163,7 @@ In this dataset, the five intervention methods across sites could be transformed
 
 ## 5. Conclusions
 
-The recommended statistical process for assessing the impact of strategies to promote zero-calorie beverages over their sugary alternatives involves both exploratory and formal analyses. An exploratory data analysis will help identify underlying patterns in the data, such as correlation and missingness. The formal analysis is recommended to include three models: interrupted time series analysis, generalized estimating equations, and the linear mixed-effects model. Each of these models is capable of handling time-series and longitudinal data. Results from these models can be tested and compared for security. These analyses will answer if the data may indicate an impact on beverage sales by various labeling and discount strategies. 
+Both exploratory and formal analyses are recommended for investigating the effectiveness of intervention strategies to promote zero-calorie beverages over their sugary alternatives involves both exploratory and formal analyses. An exploratory data analysis will help identify underlying patterns in the data, such as correlation and missingness. The formal analysis is recommended to includes three models: interrupted time series analysis, generalized estimating equations, and the linear mixed-effects model. Each of these models is capable of handling time-series and longitudinal data. Results from these models can be tested and compared for security. These analyses will answer if the data may indicate an impact on beverage sales by various labeling and discount strategies. 
    
    
    
