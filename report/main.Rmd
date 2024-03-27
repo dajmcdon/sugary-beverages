@@ -1,6 +1,5 @@
 ---
-title: "Zero-calorie Drink Consumption Intervention Report"
-author: "Parham Pishrobat, Sarah Masri, Johnson Chen"
+title: "Effect of Interventions on Tampering Sugary Beverages"
 date: "`r Sys.Date()`"
 output: 
    pdf_document:
@@ -15,9 +14,8 @@ header-includes:
   - \renewcommand{\headrulewidth}{2pt}
   - \renewcommand{\footrulewidth}{1pt}
   - \setmainfont{Times New Roman} 
-  - \usepackage{setspace} 
-  - \setstretch{1.5}
   - \usepackage{xcolor}
+  - \usepackage{setspace}\singlespacing
 ---
 
 
@@ -37,11 +35,21 @@ source("../code/GEE.R")
 source("../code/LMEM.R")
 ```
 
+**Contributions:**\linebreak
 
+
+```{=latex}
+\textbf{Parham Pishrobat (71097927):} Introduction, Data, ITSA, Other EDA Plots, Formatting\\ \\ \\
+\textbf{Sarah Masri (97415681):} \quad \quad GEE, Missing Values, Conclusion, Formatting\\ \\ \\
+\textbf{Johnson Chen (85784080):}  \quad LMEM, Correlation, Appendix, Formatting\\ \\ \\
+```
+
+
+\pagebreak
 
 ## 1. Introduction
 
-Concerns around sugar consumption and its health implications have prompted many interventions to shift consumer behaviour away from sugary beverages. The current study investigates the effectiveness of various strategies to encourage consumers to choose zero-calorie beverages over sugary alternatives. In particular, the research question focuses on the impact of two strategies to inform consumers about calorie content through visual presentations: posters highlighting either the calorie content or the physical activity required to burn calories. Furthermore, the effectiveness of price discounts on behaviour is explored, both independently and in conjunction with explanatory messaging. 
+Concerns around sugar consumption and its health implications have prompted many interventions to shift consumer behaviour away from sugary beverages. The current study investigates the effectiveness of various strategies to encourage consumers to choose zero-calorie beverages over sugary alternatives. In particular, the research question focuses on the impact of two strategies to inform consumers about calorie content through visual presentations: posters highlighting either the calorie content or the physical activity required to burn calories. Furthermore, the effectiveness of price discounts on behaviour is explored, both independently and in conjunction with explanatory messaging. This study also seek to understand if the effectiveness of those strategies varies across different sites.
 
 ## 2. Data Description and Summaries
 
@@ -67,15 +75,17 @@ beverage_sales <- read.csv("../rawdata/june1data.csv") %>%
 
 ## 3. Exploratory Analysis
 
-Exploratory Data Analysis (EDA) is an essential precursor to formal statistical methods, uncovering underlying patterns and outliers in the data. It ensures the subsequent analysis is built on a solid foundation of understanding, thereby enhancing the reliability of the findings.
+In the Exploratory Data Analysis (EDA), this report would use 
+is an essential precursor to formal statistical methods, uncovering underlying patterns and outliers in the data. It ensures the subsequent analysis is built on a solid foundation of understanding, thereby enhancing the reliability of the findings.
 
 
-### 3.1 Box Plots
+### 3.1 BoxPlots
 
 The following boxplots represent the distribution of sugary and zero-calorie beverage sales across different intervention strategies. Each boxplot captures the sales data variability with the central line denoting the median, the edges of the box indicating the interquartile range (IQR), and the whiskers extending to the furthest points that are not considered outliers. Outliers are individual points beyond the whiskers. Note that due to the bimodality of sales, the boxplot incorrectly indicates many outliers. The interventions, labelled on the x-axis, include baseline (preint), discount & messaging (dismes), washout period (wash), the discount only (dis), second washout (wash2), follow up (follow), calorie content poster (cal), the exercise required to burn the calorie content (excer), and combination of the two (both). 
 
-```{r Boxplots, fig.cap="The boxplots display the sales distribution of Sugary and Zero-Calorie beverages across various interventions. Each intervention is colour-coded and shows the range of sales data with the central line representing the median sales.", echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
-boxplots_by_category(beverage_sales, responses = c("ZeroCal", "Sugary"), category = "Intervention")
+```{r Boxplots, fig.cap="The boxplots display the sales distribution of Sugary and Zero-Calorie beverages across various interventions. Each intervention is colour-coded and shows the range of sales data with the central line representing the median sales.", echo=FALSE, fig.height=5, fig.width=8, fig.pos="H"}
+boxplots_by_category(beverage_sales, responses = c("ZeroCal", "Sugary"), category = "Intervention") + 
+  theme(text = element_text(family = "Times New Roman"))
 ```
 
 
@@ -83,7 +93,7 @@ boxplots_by_category(beverage_sales, responses = c("ZeroCal", "Sugary"), categor
   
 The following plot investigates the correlation structure between the day of the week (`DofW`), the number of zero-calorie drinks sold (`ZeroCal`), and the number of sugary drinks sold (`Sugary`). In this plot, the size, color of the circles and number represent the strength of the correlation coefficients between the variables. The `ZeroCal` and `Sugary` variables exhibit a very strong positive correlation with a correlation coefficient of 0.97. This suggests that sales of zero-calorie and sugary drinks are closely related; when sales of one type increase, sales of the other type tend to increase in a similar fashion. Conversely, both `ZeroCal` and `Sugary` drinks show a negative correlation with `DofW`, as indicated by the coefficient of -0.39. This negative correlation suggests a tendency for the sales of both drink types to decrease on certain days of the week.
 
-```{r correlation, echo=FALSE, fig.height=3, fig.width=3, fig.pos="H"}
+```{r correlation, echo=FALSE, fig.align='center', fig.height=3, fig.width=3, fig.pos="H"}
 plot_corr_plot(beverage_sales)
 ```
 
@@ -99,7 +109,7 @@ The data has some missing data. It is important to identify what kind of missing
 
 The following stacked line plot represents the sales time series of zero-calorie and sugary beverages across different sites. Each line represents the sales trajectory of one beverage type—green for zero-calorie and blue for sugary drinks. The x-axis represents time (in days), and the y-axis represents the sales volume. Dashed vertical lines indicate the start of different interventions, labelled as dismes (discount & messaging), dis (only discount), cal (calorie content poster), exer (exercise-based posters), and both. The interventions appear to influence sales, as suggested by changes in the lines' trajectories post-intervention. The plots are faceted by site, allowing for a comparative view of sales patterns across different locations.
 
-```{r sales-time-series-plot, fig.cap="This plot illustrates the daily sales volumes of zero-calorie (in green) and sugary (in blue) beverages across three hospital sites over 30 weeks. The dashed and their corresponding shorthand labels mark the interventions to allow for visual assessment of their impact on beverage sales trends.", echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
+```{r sales-time-series-plot, fig.cap="This plot illustrates the daily sales volumes of zero-calorie (in green) and sugary (in blue) beverages across three hospital sites over 30 weeks. The dashed and their corresponding shorthand labels mark the interventions to allow for visual assessment of their impact on beverage sales trends.", echo=FALSE, fig.height=4, fig.width=6, fig.pos="H"}
 plot_sales_time_series(beverage_sales)
 ```
 
@@ -159,42 +169,73 @@ The recommended statistical process for assessing the impact of strategies to pr
 
 ## 6. References
    
-   
-   Columbia University Mailman School of Public Health. (n.d.). Repeated Measures Analysis. Columbia University Mailman School of Public Health. https://www.publichealth.columbia.edu/research/population-health-methods/repeated-measures-analysis
-   UCLA Statistical Consulting Group. (n.d.). Introduction to Linear Mixed Models. Retrieved March 1, 2024, from https://stats.oarc.ucla.edu/other/mult-pkg/introduction-to-linear-mixed-models/ 
-   University of Virginia Library. (n.d.). Getting Started with Generalized Estimating Equations. Retrieved March 1, 2024, from https://library.virginia.edu/data/articles/getting-started-with-generalized-estimating-equations 
-   
+
+- [\underline{\textcolor{blue}{Interrupted Time Series Analysis}}](https://rpubs.com/mbounthavong/MEPS_tutorial_6_itsa)
+- [\underline{\textcolor{blue}{Getting Started with Generalized Estimating Equations}}](https://library.virginia.edu/data/articles/getting-started-with-generalized-estimating-equations#:~:text=Generalized%20estimating%20equations%2C%20or%20GEE,(i.e.%2C%20model%20coefficients).)
+- Linear Mixed Effect Model Tutorials:
+  + [\underline{\textcolor{blue}{LMEM tutorial (illinois.edu)}}](https://jontalle.web.engr.illinois.edu/MISC/lme4/bw_LME_tutorial.pdf)
+  + [\underline{\textcolor{blue}{Chapter 17: Mixed Effects Modeling (uic.edu)}}](https://ademos.people.uic.edu/Chapter17.html)
+  + [\underline{\textcolor{blue}{Introduction to Linear Mixed Models (ucla.edu)}}](https://stats.idre.ucla.edu/other/mult-pkg/introduction-to-linear-mixed-models/)
+  + [\underline{\textcolor{blue}{Mixed Effects Models (bodywinter.com)}}](https://bodo-winter.net/tutorial/bw_LME_tutorial1.pdf)
+  + [\underline{\textcolor{blue}{Mixed Effects, lme4 Tutorial}}](https://ourcodingclub.github.io/tutorials/mixed-models/)
+  + [\underline{\textcolor{blue}{Fitting Linear Mixed-Effects Models Using lme4}}](https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf)
+
+- ASDA Teaching Recordings:
+  + [\underline{\textcolor{blue}{Exploratory Data Analysis}}](https://community.grad.ubc.ca/gps/event/22318)
+  + [\underline{\textcolor{blue}{Study Design and Data Collection Essentials}}](https://community.grad.ubc.ca/gps/event/22327)
+  + [\underline{\textcolor{blue}{Mixed Effects Models}}](https://community.grad.ubc.ca/gps/event/22330)
+- Multiple Testing Correction Techniques:
+  + [\underline{\textcolor{blue}{Multiple Testing Correction Techniques}}](https://www.stat.berkeley.edu/~mgoldman/Section0402.pdf)
+  + [\underline{\textcolor{blue}{An Article on the Multiple Testing Problem}}](https://egap.org/resource/10-things-to-know-about-multiple-comparisons/)
+- Model Assumptions and Interpretations:
+  + [\underline{\textcolor{blue}{Linear Mixed Effects Model Assumptions}}](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13434)
+  + [\underline{\textcolor{blue}{DHARMa: a Residual Diagnostics Tool for LMEM}}](https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html)
+  + [\underline{\textcolor{blue}{Interactions Explained}}](www.medicine.mcgill.ca/epidemiology/Joseph/courses/EPIB-621/interaction.pdf) 
+  + [\underline{\textcolor{blue}{Understanding Interactions between Categorical and Continuous Variables}}](https://www.theanalysisfactor.com/interactions-categorical-and-continuous-variables/)
+  + [\underline{\textcolor{blue}{Interaction Plots}}](https://ademos.people.uic.edu/Chapter13.html)
+  + [\underline{\textcolor{blue}{Interaction Plots}}](https://rpubs.com/tf_peterson/interactionplotDemo)
+  + [\underline{\textcolor{blue}{Testing for Interaction Significance}}](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)
+  + [\underline{\textcolor{blue}{Package `emmeans` for Post-hoc Analysis and Pairwise Comparisons of the Interaction Effect}}](https://cran.r-project.org/web/packages/emmeans/vignettes/interactions.html)
+  + [\underline{\textcolor{blue}{Interaction Analysis in R}}](https://stats.oarc.ucla.edu/r/seminars/interactions-r/)
+  + [\underline{\textcolor{blue}{Comparisons and Contrasts in emmeans}}](https://cran.r-project.org/web/packages/emmeans/vignettes/comparisons.html)  
+
 
 ## 7. Statistical Appendix
+   
+The following sub section contain some additional information and analysis results.
 
-### LME model
 
-Let $y_i$ be the vector of measurements of response for site $i$, then a Linear Mixed Effect model is written as 
-$$y_i = X_i\beta + Z_i b_i + e_i$$ 
-where $\beta$ contains fixed effects, $b_i$ contains random effects parameter for site $i$. In this case, the expanded general parameters would be 
-$$y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}$$
-where $y_{ij}$ is the sales of beverage at site $i$ day $j$, $ \beta^0 + b_{ij}^0$ is the fixed and random terms for intercept, $(\beta_1 + b_{ij}^1)Treatment$ consists of the fixed and random terms for all four indicator variable for treatment, $(\beta_2 + b_{ij}^2)Day of Week$ consists of the fixed and random terms for each day of the week, $(\beta_3 + b_{ij}^3)Duration$ represents the fixed and random effect of slope for duration into a specific treatment.
+### Histogram Plots
 
-### GEE Model
+The following histogram plots show the frequency distribution of sales for Sugary (in purple), Zero-Calorie (ZeroCal, in teal), and Total (in yellow) beverages. The x-axis of each histogram represents the sales volume, while the y-axis indicates the count of observations within each sales range. The pattern in all histograms is similar:  most sales numbers cluster at the lower end of the scale, suggesting a higher frequency of days with fewer sales; however, the sales histograms exhibit a second weaker mode, indicating two common sales volumes across the observed period.
 
-Let $\mathbf{Y_i}$ be the outcome variable for beverage $i$ (zero-calorie or sugared) sales.
+```{r Plot-Histograms, fig.cap = "Sales Distribution Analysis: Histograms displaying the frequency of sales for Sugary (purple), Zero-Calorie (teal), and Total combined (yellow) beverages. Each histogram reveals the distribution pattern of sales volumes, highlighting the bimodal nature of sales across all types.", fig.label='fig:hist-plot', echo=FALSE,  message=FALSE, warning=FALSE}
+plot_histograms(beverage_sales, var_names = c("Sugary", "ZeroCal", "Total"))
+```
 
-Let $g(\cdot)$ be the log link function (Poisson or Negative Binomial). Then, for design matrix $\mathbf{X}$ including all revenant predictors, the model can be written more explicitly as
 
-$$
-g(\mathbb{E}[Y_i]) = \beta_{0i} \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging}) 
-$$
+### Scatter Plot
 
-$$
-+ \beta_{4i} (\text{Exercise Messaging}) + \beta_{5i} (\text{Both Calorie Messaging}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})
-$$
+The following scatter plot depicts the relationship between zero-calorie and sugary beverage sales at three different hospital sites: A or chop (purple), B or HF (blue), and C or NS (yellow). The x-axis represents zero-calorie beverage sales, and the y-axis represents sugary beverage sales. A dashed line, suggesting the line of equality, indicates where the sales for both types would be equal. Points above the line indicate higher sugary beverage sales when compared to zero-calorie ones, and points below the line indicate the opposite. The clustering of points towards the upper right suggests that for higher sales volumes, sugary beverages tend to sell as much as or more than zero-calorie options, particularly in site A (chop). The plot reveals variability in the sales patterns across sites, with the HF site having a more direct correlation between ZeroCal and Sugary sales when compared to other sites.
 
-$$
-+ \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
-$$
 
-Then $\beta_{0i}$ is the intercept. (Discount) and (Discount + Messaging) are each dummy variables to represent the discount intervention without messaging, and discount with messaging respectively. (Site B) and (Site C) are also dummy variables to indicate the site, with the baseline being site A.
+```{r Sales-Scatterplot, fig.cap="This scatter plot contrasts zero-calorie and sugary beverage sales, colour-coded by the site. Each point represents the paired sales data for a given day, with the site-specific colour coding (chop in purple, HF in blue, NS in yellow) illustrating the sales trend at each location. The dashed diagonal line marks the parity where the sales of both beverage types are equal. Deviations from this line highlight the predominance of one beverage type over the other in daily sales.", echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
+plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
+```
 
+
+### Missing Values
+
+The following plot visualizes the missing values.
+
+
+```{r data quality, echo=FALSE, out.width='75%', fig.width=9, fig.height=6, fig.show='hold',fig.align='center', fig.cap="This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention."}
+
+miss_plot1 <- plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
+miss_plot2 <- plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
+
+grid.arrange(miss_plot1, miss_plot2, ncol=2)
+```
 
 ### ITSA Model
 
@@ -240,34 +281,35 @@ Here, $\beta_{4kl}$ captures the combined effect of interventions $k$ and $l$ wh
 
 Lastly, the model can be augmented with covariates to control for other factors that may influence sales, such as seasonal effects or marketing campaigns. These covariates can be time-varying and should be included in the model if they are thought to confound the relationship between the interventions and sales.
 
-### Histogram Plots
+### GEE Model
 
-The following histogram plots show the frequency distribution of sales for Sugary (in purple), Zero-Calorie (ZeroCal, in teal), and Total (in yellow) beverages. The x-axis of each histogram represents the sales volume, while the y-axis indicates the count of observations within each sales range. The pattern in all histograms is similar:  most sales numbers cluster at the lower end of the scale, suggesting a higher frequency of days with fewer sales; however, the sales histograms exhibit a second weaker mode, indicating two common sales volumes across the observed period.
+Let $\mathbf{Y_i}$ be the outcome variable for beverage $i$ (zero-calorie or sugared) sales.
 
-```{r Plot-Histograms, fig.cap = "Sales Distribution Analysis: Histograms displaying the frequency of sales for Sugary (purple), Zero-Calorie (teal), and Total combined (yellow) beverages. Each histogram reveals the distribution pattern of sales volumes, highlighting the bimodal nature of sales across all types.", fig.label='fig:hist-plot', echo=FALSE,  message=FALSE, warning=FALSE}
-plot_histograms(beverage_sales, var_names = c("Sugary", "ZeroCal", "Total"))
-```
+Let $g(\cdot)$ be the log link function (Poisson or Negative Binomial). Then, for design matrix $\mathbf{X}$ including all revenant predictors, the model can be written more explicitly as
 
+$$
+g(\mathbb{E}[Y_i]) = \beta_{0i} + \beta_{1i} (\text{Discount}) + \beta_{2i} (\text{Discount + Messaging}) + \beta_{3i} (\text{Calorie Messaging}) 
+$$
 
-### Scatter Plot
+$$
++ \beta_{4i} (\text{Exercise Messaging}) + \beta_{5i} (\text{Both Calorie Messaging}) + \beta_{6i} (\text{site B}) + \beta_{7i} (\text{site C})
+$$
 
-The following scatter plot depicts the relationship between zero-calorie and sugary beverage sales at three different hospital sites: A or chop (purple), B or HF (blue), and C or NS (yellow). The x-axis represents zero-calorie beverage sales, and the y-axis represents sugary beverage sales. A dashed line, suggesting the line of equality, indicates where the sales for both types would be equal. Points above the line indicate higher sugary beverage sales when compared to zero-calorie ones, and points below the line indicate the opposite. The clustering of points towards the upper right suggests that for higher sales volumes, sugary beverages tend to sell as much as or more than zero-calorie options, particularly in site A (chop). The plot reveals variability in the sales patterns across sites, with the HF site having a more direct correlation between ZeroCal and Sugary sales when compared to other sites.
+$$
++ \beta_{8i} (\text{Day of Week})+ \beta_{9i} (\text{Total sales})
+$$
 
-
-```{r Sales-Scatterplot, fig.cap="This scatter plot contrasts zero-calorie and sugary beverage sales, colour-coded by the site. Each point represents the paired sales data for a given day, with the site-specific colour coding (chop in purple, HF in blue, NS in yellow) illustrating the sales trend at each location. The dashed diagonal line marks the parity where the sales of both beverage types are equal. Deviations from this line highlight the predominance of one beverage type over the other in daily sales.", echo=FALSE, fig.height=3, fig.width=6, fig.pos="H"}
-plot_beverage_sales_comparison(beverage_sales, "ZeroCal", "Sugary", "Site")
-```
-
-
-### Missing Values
-
-The following plot visualizes the missing values.
+Then $\beta_{0i}$ is the intercept. (Discount) and (Discount + Messaging) are each dummy variables to represent the discount intervention without messaging, and discount with messaging respectively. (Site B) and (Site C) are also dummy variables to indicate the site, with the baseline being site A.
 
 
-```{r data quality, echo=FALSE, out.width='75%', fig.width=12.5, fig.height=7.5, fig.show='hold',fig.align='center', fig.cap="This plot provides insight into the frequency of missingness within the dataset. Black indicates missing data. Additionally it shows the quanitity of data available by site and by intervention."}
 
-miss_plot1 <- plot_missing_data(beverage_sales, group_by_site=TRUE, group_by_intervention=FALSE)
-miss_plot2 <- plot_missing_data(beverage_sales, group_by_site=FALSE, group_by_intervention=TRUE)
+### LME model
 
-grid.arrange(miss_plot1, miss_plot2, ncol=2)
-```
+Let $y_i$ be the vector of measurements of response for site $i$, then a Linear Mixed Effect model is written as 
+$$y_i = X_i\beta + Z_i b_i + e_i$$ 
+where $\beta$ contains fixed effects, $b_i$ contains random effects parameter for site $i$. In this case, the expanded general parameters would be 
+$$y_{ij}  = \beta_0 + b_{ij}^0 + (\beta_1 + b_{ij}^1)Treatment + (\beta_2 + b_{ij}^2)Day of Week +(\beta_3 + b_{ij}^3)Duration +e_{ij}$$
+where $y_{ij}$ is the sales of beverage at site $i$ day $j$, $ \beta^0 + b_{ij}^0$ is the fixed and random terms for intercept, $(\beta_1 + b_{ij}^1)Treatment$ consists of the fixed and random terms for all four indicator variable for treatment, $(\beta_2 + b_{ij}^2)Day of Week$ consists of the fixed and random terms for each day of the week, $(\beta_3 + b_{ij}^3)Duration$ represents the fixed and random effect of slope for duration into a specific treatment.
+
+
+
